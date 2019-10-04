@@ -1,0 +1,37 @@
+{
+  "name": "gotcha",
+  "version": "1.0.0",
+  "description": "Platform for Gotcha 2019",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zankner/Gotcha.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zankner/Gotcha/issues"
+  },
+  "homepage": "https://github.com/zankner/Gotcha#readme",
+  "devDependencies": {
+    "react-redux": "^7.1.1",
+    "react-router-dom": "^5.1.2",
+    "webpack": "^4.41.0",
+    "webpack-cli": "^3.3.9"
+  },
+  "dependencies": {
+    "@firebase/app": "^0.4.18",
+    "@fortawesome/fontawesome-svg-core": "^1.2.25",
+    "@fortawesome/free-solid-svg-icons": "^5.11.2",
+    "react": "^16.10.2",
+    "react-dom": "^16.10.2",
+    "react-redux-firebase": "^2.4.1",
+    "react-router-scroll-top": "^0.2.1",
+    "redux": "^4.0.4",
+    "redux-firestore": "^0.9.0"
+  }
+}
