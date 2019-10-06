@@ -20,7 +20,8 @@ class TaggedCard extends React.Component {
 						<h2 className="display-5">Another headline</h2>
 						<p className="lead">And an even wittier subheading.</p>
 					</div>
-					<div className="bg-light shadow-sm mx-auto" style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"/>
+					<div className="bg-light shadow-sm mx-auto"
+							 style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"/>
 				</div>
 		);
 	}
