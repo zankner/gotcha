@@ -1,9 +1,18 @@
 import React from 'react';
+import HomeProfileCard from "../components/HomeProfileCard";
+import TaggedCard from "../components/TaggedCard";
 
 const Home = () => (
 	<>
-		<h1>Hello</h1>
-		<p>Hello, World!</p>
+		<HomeProfileCard />
+		<div className="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+			<TaggedCard />
+			<TaggedCard />
+		</div>
+		<div className="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
+			<TaggedCard />
+			<TaggedCard />
+		</div>
 	</>
 );
 

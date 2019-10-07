@@ -10,7 +10,6 @@ import { ErrorMessage, Field, Form, Formik, getIn } from 'formik';
 class TaggedCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.onSubmit = this.onSubmit.bind(this);
 	}
 
 	render() {
@@ -21,7 +20,7 @@ class TaggedCard extends React.Component {
 						<p className="lead">And an even wittier subheading.</p>
 					</div>
 					<div className="bg-light shadow-sm mx-auto"
-							 style="width: 80%; height: 300px; border-radius: 21px 21px 0 0;"/>
+							 style={{width: '80%', height: 300, borderRadius: 21}}/>
 				</div>
 		);
 	}
