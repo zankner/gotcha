@@ -1,17 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import Swiper from 'react-id-swiper';
-import HomeProfileCard from "../components/HomeProfileCard";
-import TaggedCard from "../components/TaggedCard";
+import React from 'react';
 
-const Home = () => {
-	return (
-		<Layout header={true} footer={true} title={'Gotcha 2019 | Home'}>
-			<HomeProfileCard />
-			<TaggedCard />
-		</Layout>
-	);
-};
+const Home = () => (
+	<>
+		<h1>Hello</h1>
+		<p>Hello, World!</p>
+	</>
+);
 
 export default Home;
