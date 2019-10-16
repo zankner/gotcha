@@ -15,7 +15,6 @@ import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from '../../pages';
 import Profile from "../../pages/profile";
 
-
 // Initialize Firebase
 firebase.initializeApp({
 	apiKey: 'AIzaSyBX-EwuQ3j5cubMXWlrMtkuaOpBToBuUR8',
