@@ -12,7 +12,7 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Home from '../../pages';
+import Home from "../../pages";
 import Profile from "../../pages/profile";
 
 
