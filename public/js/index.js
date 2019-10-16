@@ -11,8 +11,9 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 import Home from '../../pages';
+import Profile from "../../pages/profile";
 
 // Initialize Firebase
 firebase.initializeApp({
@@ -44,15 +45,16 @@ const rrfProps = {
 
 // Initialize Font Awesome
 library.add(fas);
-
+console.log('ok');
 render(
 	<Provider store={store}>
 		<ReactReduxFirebaseProvider {...rrfProps}>
-			<BrowserRouter>
+			<HashRouter>
 				<Switch>
 					<Route exact path='/' component={Home} />
+					<Route exact path='/profile' component={Profile} />
 				</Switch>
-			</BrowserRouter>
+			</HashRouter>
 		</ReactReduxFirebaseProvider>
 	</Provider>, document.getElementById('root')
 );
