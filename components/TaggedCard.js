@@ -12,6 +12,42 @@ class TaggedCard extends React.Component {
 		super(props);
 	}
 
+	componentDidMount() {
+		this.componentDidUpdate();
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (!this.props.profile.isLoaded || !this.props.auth.isLoaded || this.state.error) {
+			return;
+		}
+
+		if (!this.state.profile.isLoaded) {
+			const uid = this.props.match.params.uid;
+
+			// If the logged in user is viewing their own profile
+			if (this.props.auth.uid === uid) {
+				this.setState({ profile: { ...this.props.profile, isSelf: true, isLoaded: true } });
+			} else {
+				this.props.firebase.firestore().collection('users').doc(uid).get().then(doc => {
+					const profile = doc.data();
+
+					if (!profile) {
+						this.setState({ error: true });
+					}
+
+					this.setState({ profile: { ...profile, isSelf: false, isLoaded: true } });
+				}).catch(() => this.setState({ error: true }));
+			}
+		}
+	}
+
+	getUser(){
+		this.props.userRef.get().then(doc => {
+			const profile = doc.date;
+
+		})
+	}
+
 	render() {
 		return (
 			<div className="bg-dark mr-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
