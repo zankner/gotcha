@@ -1,3 +1,7 @@
+.profile-card {
+	border-radius: 20px;
+}
+
 .profile-header-row {
 	margin-top: 30px;
 	margin-bottom: 13px;
@@ -7,14 +11,20 @@
 	margin-bottom: 60px !important;
 }
 
-.profile-name {
-	color: $orange;
-	font-family: 'Arial';
+.profile-img-wrapper {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.profile-info-wrapper {
+	border: none;
+}
+
+.profile-card-header {
+	border-radius: 15px !important;
 }
 
 .profile-info {
 	font-size: 20px;
-	color: $blue;
 }
 
 .tags {
@@ -63,9 +73,22 @@
 	margin-bottom: 10px;
 }
 
-.stats {
+.profile-stats {
 	border: 5px solid $orange;
 	border-radius: 20px;
 	padding-top: 25px;
 	badding-bottom: 25px;
+}
+
+.profile-graph-row {
+	margin-bottom: 25px;
+}
+
+.profile-hide-stats {
+	cursor: pointer;
+	color: $gray-600 !important;
+}
+
+html {
+  scroll-behavior: smooth;
 }

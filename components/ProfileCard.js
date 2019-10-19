@@ -18,15 +18,26 @@ class ProfileCard extends React.Component {
 		return (
       <div className="container-fluid">
         <div className="row profile-header-row">
-          <div className="col-12">
-            <h1 className="text-center profile-name">{user.name}</h1>
-            <div className="text-center profile-info">
-              <span className="tags">TAGS: {user.tags.total}</span>
-              <span>PLACE: {user.place}</span>
+          <div className="col-md-6 offset-md-3">
+            <div className="card bg-light mb-3 text-center profile-card">
+              <div className="card-header profile-card-header">
+                <h3>{user.name}</h3>
+                <h5>Class {user.grade}</h5>
+              </div>
+              <div className="card-body profile-img-wrapper">
+                <img src={user.profilePicture}/>
+                <br/>
+                <button onClick={scrollToStats} className="btn btn-primary">View Statistics</button>
+              </div>
+              <div className="card-header profile-info-wrapper profile-card-header">
+                <p className="card-text">
+                  <span className="profile-info">PLACE: {user.place}</span>
+                  <br/>
+                  <span className="profile-info">TAGS: {user.tags.total}</span>
+                  <br/>
+                </p>
+              </div>
             </div>
-          </div>
-          <div className="col-10 offset-1">
-            <hr/>
           </div>
         </div>
         <div className="row justify-content-center profile-row-margin">
@@ -49,8 +60,8 @@ class ProfileCard extends React.Component {
             </div>
           </div>
         </div>
-        <div className="container stats profile-row-margin">
-          <div className="row profile-row-margin">
+        <div className="container profile-stats profile-row-margin" ref={statsRef} id="profile-stats">
+          <div className="row profile-graph-row">
             <div className="col-12 col-md-8 offset-md-2">
                <Line data={data} options={options}/>
             </div>
@@ -70,6 +81,7 @@ class ProfileCard extends React.Component {
                   {tagTableHTML}
                 </tbody>
               </table>
+              <p className="text-center"><a className="profile-hide-stats" onClick={hideStats}>hide</a></p>
             </div>
           </div>
         </div>
@@ -78,9 +90,23 @@ class ProfileCard extends React.Component {
 	}
 }
 
+$(document).ready(() => {
+  $('#profile-stats').hide();
+});
+const statsRef = React.createRef();
+const scrollToStats = () => {
+  $('#profile-stats').show();
+  window.scrollTo(0, statsRef.current.offsetTop);
+};
+const hideStats = () => {
+  $('#profile-stats').hide();
+};
+
 // this is data that would come from database
 const user = {
-  name: 'Max Litvak',
+  name: 'Ben Botvinick',
+  grade: 'II',
+  profilePicture: '/img/ben.png',
   tags: {
     total: 4,
     days: [{
