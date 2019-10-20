@@ -14,6 +14,10 @@ class ProfileCard extends React.Component {
 		super(props);
 	}
 
+  componentDidMount() {
+    window.addEventListener('load', $('#profile-stats').hide());
+  }
+
 	render() {
 		return (
       <div className="container-fluid">
@@ -90,9 +94,6 @@ class ProfileCard extends React.Component {
 	}
 }
 
-$(document).ready(() => {
-  $('#profile-stats').hide();
-});
 const statsRef = React.createRef();
 const scrollToStats = () => {
   $('#profile-stats').show();
