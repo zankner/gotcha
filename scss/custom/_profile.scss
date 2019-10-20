@@ -1,6 +1,7 @@
 .profile-card {
 	border-radius: 20px;
 	overflow: hidden;
+	box-shadow: 3px 3px 5px 5px #ccc;
 }
 
 .profile-header-row {
@@ -19,8 +20,6 @@
 .profile-info-wrapper {
 	border: none;
 }
-
-
 
 .profile-info {
 	font-size: 20px;
@@ -75,7 +74,6 @@
 .profile-stats {
 	border: 5px solid $orange;
 	border-radius: 20px;
-	padding-top: 25px;
 	badding-bottom: 25px;
 }
 
