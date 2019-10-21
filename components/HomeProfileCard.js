@@ -10,30 +10,36 @@ import { ErrorMessage, Field, Form, Formik, getIn } from 'formik';
 class HomeProfileCard extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {name: ''};
+	}
+
+	componentDidMount() {
+		this.componentDidUpdate();
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		this.getUserName()
+	}
+
+	getUserName(){
+		this.props.firebase.firestore().collection('users').doc('zack').get().then(doc => {
+			const user = doc.data();
+			this.setState({name: user.name});
+		})
 	}
 
 	render() {
 		return (
+			<>
 			<div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
 				<div className="col-md-5 p-lg-5 mx-auto my-5">
-					<div className="card mb-3 rounded-lg shadow-lg" style={{'max-width': 540}}>
-						<div className="row no-gutters">
-							<div className="col-md-4">
-								<img src="..." className="card-img" alt="..." />
-							</div>
-							<div className="col-md-8">
-								<div className="card-body">
-									<h5 className="card-title">Card title</h5>
-									<p className="card-text">This is a wider card with supporting text below as a natural lead-in to
-										additional content. This content is a little bit longer.</p>
-									<p className="card-text"><small className="text-muted">Last updated 3 mins ago</small></p>
-								</div>
-							</div>
-						</div>
-					</div>
+					<h1 className="display-4 font-weight-normal">{this.state.name}</h1>
+					<p className="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing
+						efforts with this example based on Apple’s marketing pages.</p>
 					<button type="button" className="btn btn-primary btn-lg">Tag out</button>
 				</div>
 			</div>
+			</>
 		);
 	}
 }
