@@ -26,7 +26,7 @@ class ProfileCard extends React.Component {
             <div className="card bg-light mb-3 text-center profile-card">
               <div className="card-header profile-card-header">
                 <h3>{user.name}</h3>
-                <h5>Class {user.grade}</h5>
+                <h5>{user.grade}</h5>
               </div>
               <div className="card-body profile-img-wrapper">
                 <img src={user.profilePicture}/>
@@ -106,7 +106,7 @@ const hideStats = () => {
 // this is data that would come from database
 const user = {
   name: 'Ben Botvinick',
-  grade: 'II',
+  grade: 'Class II',
   profilePicture: '/img/ben.png',
   tags: {
     total: 4,
