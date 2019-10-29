@@ -1,7 +1,7 @@
 .profile-card {
 	border-radius: 20px;
 	overflow: hidden;
-	box-shadow: 3px 3px 5px 5px #ccc;
+	box-shadow: 0px 3px 5px 5px #ccc;
 }
 
 .profile-header-row {
@@ -23,6 +23,14 @@
 
 .profile-info {
 	font-size: 20px;
+}
+
+.profile-statistics-button {
+	margin-bottom: 5px;
+}
+
+.profile-form-label {
+	margin-left: 4px;
 }
 
 .tags {
@@ -72,9 +80,11 @@
 }
 
 .profile-stats {
-	border: 5px solid $orange;
 	border-radius: 20px;
-	badding-bottom: 25px;
+	padding-bottom: 30px;
+	background-color: white;
+	box-shadow: 0px 3px 5px 5px #ccc;
+	padding-top: 30px;
 }
 
 .profile-graph-row {

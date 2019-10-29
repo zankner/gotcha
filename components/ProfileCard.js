@@ -12,10 +12,46 @@ import { Line } from 'react-chartjs-2';
 class ProfileCard extends React.Component {
 	constructor(props) {
 		super(props);
+    this.state = {
+      name: '',
+      grade: '',
+      photoURL: '',
+      tags: [],
+      bio: ''
+    };
+
+    this.loggedIn = true;
+    this.editProfile = false;
 	}
 
   componentDidMount() {
     window.addEventListener('load', $('#profile-stats').hide());
+    this.getUser();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    this.getUser();
+  }
+
+  getUser() {
+    this.props.firebase.firestore().collection('users').doc('zack').get().then(doc => {
+      const user = doc.data();
+      this.setState({name: user.name});
+      this.setState({grade: user.grade});
+      this.setState({photoURL: user.photoURL});
+      this.formatGrade = 'Class ' + 'I'.repeat(this.state.grade);
+      this.setState({bio: user.bio ? user.bio : ''});
+    });
+  }
+
+  switchEditProfile() {
+    this.editProfile = true;
+  }
+
+  updateProfile() {
+    this.props.firebase.firestore().collection('users').doc('zack').set({
+      bio: this.state.bio
+    });
   }
 
 	render() {
@@ -25,14 +61,22 @@ class ProfileCard extends React.Component {
           <div className="col-md-6 offset-md-3">
             <div className="card bg-light mb-3 text-center profile-card">
               <div className="card-header profile-card-header">
-                <h3>{user.name}</h3>
-                <h5>{user.grade}</h5>
+                <h3>{this.state.name}</h3>
+                <h5>{this.formatGrade}</h5>
               </div>
-              <div className="card-body profile-img-wrapper">
-                <img src={user.profilePicture}/>
+              {!this.editProfile && <div className="card-body profile-img-wrapper">
+                <img src={this.state.photoURL}/>
                 <br/>
-                <button onClick={scrollToStats} className="btn btn-primary">View Statistics</button>
-              </div>
+                <button onClick={scrollToStats} className="btn btn-primary profile-statistics-button">View {this.loggedIn && <span>My </span>}Statistics</button> <br/>
+                <button type="button" className="btn btn-link" onClick={() => this.editProfile = true}>Edit My Profile</button>
+              </div>}
+              {this.editProfile && <div className="card-body profile-img-wrapper">
+                <div className="form-group text-left">
+                  <label htmlFor="bio" className="profile-form-label">Bio</label>
+                  <textarea className="form-control" placeholder="Bio" id="bio"/>
+                </div>
+                <button type="button" className="btn btn-primary" onClick={this.updateProfile}>Save</button>
+              </div>}
               <div className="card-header profile-info-wrapper profile-card-header">
                 <p className="card-text">
                   <span className="profile-info">PLACE: {user.place}</span>
@@ -106,7 +150,7 @@ const hideStats = () => {
 // this is data that would come from database
 const user = {
   name: 'Ben Botvinick',
-  grade: 'Class II',
+  class: 'Class II',
   profilePicture: '/img/ben.png',
   tags: {
     total: 4,
