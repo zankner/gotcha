@@ -1,6 +1,6 @@
 import React from 'react';
-import HomeProfileCard from "../components/HomeProfileCard";
-import TaggedCard from "../components/TaggedCard";
+import HomeProfileCard from '../components/HomeProfileCard';
+import TaggedCard from '../components/TaggedCard';
 
 const Home = () => (
 	<>

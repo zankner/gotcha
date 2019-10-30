@@ -6,8 +6,6 @@ import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-import { ErrorMessage, Field, Form, Formik, getIn } from 'formik';
-
 class StatsGraph extends React.Component {
 	constructor(props) {
 		super(props);
@@ -25,7 +23,7 @@ class StatsGraph extends React.Component {
 						<button type="button" className="btn btn-sm btn-outline-secondary">Export</button>
 					</div>
 					<button type="button" className="btn btn-sm btn-outline-secondary dropdown-toggle">
-						<span data-feather="calendar"/>
+						<span data-feather="calendar" />
 						This week
 					</button>
 				</div>

@@ -5,7 +5,6 @@ import 'firebase/auth';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { ErrorMessage, Field, Form, Formik, getIn } from 'formik';
 
 class TaggedCard extends React.Component {
 	constructor(props) {
@@ -24,11 +23,11 @@ class TaggedCard extends React.Component {
 		this.getUser();
 	}
 
-	getUser(){
+	getUser() {
 		this.props.firebase.firestore().collection('users').doc('zack').get().then(doc => {
 			const user = doc.data();
-			this.setState({name: user.name, lastWords: user.lastWords});
-		})
+			this.setState({ name: user.name, lastWords: user.lastWords });
+		});
 	}
 
 	render() {
@@ -39,7 +38,7 @@ class TaggedCard extends React.Component {
 					<p className="lead">{this.state.lastWords}</p>
 				</div>
 				<div className="bg-light shadow-sm mx-auto"
-						 style= {{width: '80%', height: 300, 'border-radius': '21px 21px 0 0'}}/>
+						 style={{ width: '80%', height: 300, 'border-radius': '21px 21px 0 0' }} />
 			</div>
 		);
 	}

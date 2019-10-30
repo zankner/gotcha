@@ -5,12 +5,11 @@ import 'firebase/auth';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
-import { ErrorMessage, Field, Form, Formik, getIn } from 'formik';
 
 class HomeProfileCard extends React.Component {
 	constructor(props) {
 		super(props);
-		this.state = {name: ''};
+		this.state = { name: '' };
 	}
 
 	componentDidMount() {
@@ -18,27 +17,27 @@ class HomeProfileCard extends React.Component {
 	}
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
-		this.getUserName()
+		this.getUserName();
 	}
 
-	getUserName(){
+	getUserName() {
 		this.props.firebase.firestore().collection('users').doc('zack').get().then(doc => {
 			const user = doc.data();
-			this.setState({name: user.name});
-		})
+			this.setState({ name: user.name });
+		});
 	}
 
 	render() {
 		return (
 			<>
-			<div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-				<div className="col-md-5 p-lg-5 mx-auto my-5">
-					<h1 className="display-4 font-weight-normal">{this.state.name}</h1>
-					<p className="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing
-						efforts with this example based on Apple’s marketing pages.</p>
-					<button type="button" className="btn btn-primary btn-lg">Tag out</button>
+				<div className="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+					<div className="col-md-5 p-lg-5 mx-auto my-5">
+						<h1 className="display-4 font-weight-normal">{this.state.name}</h1>
+						<p className="lead font-weight-normal">And an even wittier subheading to boot. Jumpstart your marketing
+							efforts with this example based on Apple’s marketing pages.</p>
+						<button type="button" className="btn btn-primary btn-lg">Tag out</button>
+					</div>
 				</div>
-			</div>
 			</>
 		);
 	}
