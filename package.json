@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "python3 -m http.server -d dist 3000",
+    "start": "node ./bin/start",
+    "dev": "nodemon ./bin/start",
+    "test": "node ./bin/test",
     "build": "webpack"
   },
   "dependencies": {
