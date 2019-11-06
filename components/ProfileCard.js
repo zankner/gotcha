@@ -38,20 +38,22 @@ class ProfileCard extends React.Component {
       const user = doc.data();
       this.setState({name: user.name});
       this.setState({grade: user.grade});
-      this.setState({photoURL: user.photoURL});
       this.formatGrade = 'Class ' + 'I'.repeat(this.state.grade);
+      this.setState({photoURL: user.photoURL});
       this.setState({bio: user.bio ? user.bio : ''});
     });
   }
 
   switchEditProfile() {
-    this.editProfile = true;
+    this.editProfile = !this.editProfile;
   }
 
   updateProfile() {
-    this.props.firebase.firestore().collection('users').doc('zack').set({
-      bio: this.state.bio
+    const bio = $('#bio').val();
+    this.props.firebase.firestore().collection('users').doc('zack').update({
+     bio: bio
     });
+    this.setState({bio: bio}, () => console.log(this.state.bio));
   }
 
 	render() {
@@ -75,8 +77,12 @@ class ProfileCard extends React.Component {
                   <label htmlFor="bio" className="profile-form-label">Bio</label>
                   <textarea className="form-control" placeholder="Bio" id="bio"/>
                 </div>
-                <button type="button" className="btn btn-primary" onClick={this.updateProfile}>Save</button>
+                <button type="button" className="btn btn-primary" onClick={() => {
+                  this.updateProfile();
+                  this.switchEditProfile();
+                }}>Save</button>
               </div>}
+              {this.state.bio}
               <div className="card-header profile-info-wrapper profile-card-header">
                 <p className="card-text">
                   <span className="profile-info">PLACE: {user.place}</span>
