@@ -1,9 +1,9 @@
 import React from 'react';
-import BarChart from '../components/bar';
+import TagHistory from '../components/TagHistory';
 
 const Stats = () => (
 	<>
-		<BarChart />
+		<TagHistory />
 	</>
 );
 

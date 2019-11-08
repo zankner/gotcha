@@ -64,7 +64,7 @@ const options = {
   	position: 'top',
   	text: 'Total Tags Per Class',
   	fontSize: 20
-  }
+  },
   scales: {
   	yAxes: [{
   		ticks: {
