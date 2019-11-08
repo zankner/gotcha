@@ -10,16 +10,29 @@ import { Bar } from 'react-chartjs-2';
 class BarChart extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {'tags':[]};
+	}
+
+	componentDidMount() {
+		this.componentDidUpdate();
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
 		this.getData();
+		this.genGraph();
 	}
 
 	getData() {
-		// api call
-		const classData = [50, 40, 20, 20];
-		this.bar = this.makeBar(classData);
+		const statsRef = this.props.firebase.firestore().collection('stats').doc('sumTags');
+		statsRef.get().then(doc => {
+			const stats = doc.data();
+			const tags = [];
+			tags.push(stats.class1, stats.class2, stats.class3, stats.class4);
+			this.setState({tags: tags});
+		})
 	}
 
-	makeBar (data) {
+	genGraph() {
 		const bar = {
 			labels: [
 				`Freshman`,
@@ -28,7 +41,7 @@ class BarChart extends React.Component {
 				`Seniors`
 			],
 			datasets: [{
-				data: data,
+				data: this.state.tags,
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -41,13 +54,15 @@ class BarChart extends React.Component {
 				]
 			}]
 		};
-		return bar;
+		this.bar = bar;
 	}
 
 	render() {
 		return (
 			<div>
+			{this.state.tags.length != 0 &&
 				<Bar data={this.bar} options={options} />
+			}
 			</div>
 		);
 	}
