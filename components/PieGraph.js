@@ -10,25 +10,48 @@ import { Pie } from 'react-chartjs-2';
 class PieChart extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			'class1': null,
+			'class2': null,
+			'class3': null,
+			'class4': null
+		}
 		this.getData();
 	}
 
-	getData() {
-		// api call
-		const classData = [50, 10, 20, 20];
-		this.pie = this.makePie(classData);
+	componentDidMount() {
+		this.componentDidUpdate();
 	}
 
-	makePie (data) {
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		this.getData();
+		this.genGraph();
+	}
+
+	getData() {
+		const userRef = this.props.firebase.firestore().collection('users');
+		for(const grade in this.state){
+		  userRef.where("tagged", "==", false).where("class", "==", grade).get().then(querySnapshot => {
+				this.setState({[grade]: querySnapshot.size});
+		  });
+		}
+		this.pie = this.genGraph();
+	}
+
+	genGraph() {
+		const graphData = [];
+		for(const grade in this.state){
+			graphData.push(grade);
+		}
 		const pie = {
 			labels: [
-				`Freshman (${data[0]}%)`,
-				`Sophomores (${data[1]}%)`,
-				`Juniors (${data[2]}%)`,
-				`Seniors (${data[3]}%)`
+				`Freshman (${this.state.class4}%)`,
+				`Sophomores (${this.state.class3}%)`,
+				`Juniors (${this.state.class2}%)`,
+				`Seniors (${this.state.class1}%)`
 			],
 			datasets: [{
-				data: data,
+				data: graphData,
 				backgroundColor: [
 				'#FF6384',
 				'#36A2EB',
@@ -41,13 +64,15 @@ class PieChart extends React.Component {
 				]
 			}]
 		};
-		return pie;
+		this.pie = pie;
 	}
 
 	render() {
 		return (
 			<div>
-				<Pie data={this.pie} options={options} />
+				{!(null in this.state) &&
+					<Pie data={this.pie} options={options} />
+				}
 			</div>
 		);
 	}
