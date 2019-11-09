@@ -33,6 +33,7 @@ class PieChart extends React.Component {
 		for (const grade of Object.keys(this.state)) {
 		  userRef.where("tagged", "==", false).where("class", "==", grade).get().then(querySnapshot => {
 				this.setState({[grade]: querySnapshot.size});
+				if (querySnapshot.size > 0) this.show = true;
 		  });
 		}
 		this.pie = this.genGraph();
@@ -71,7 +72,7 @@ class PieChart extends React.Component {
 	render() {
 		return (
 			<div>
-				{!(null in this.state) &&
+				{this.show &&
 					<Pie data={this.pie} options={options} />
 				}
 			</div>
