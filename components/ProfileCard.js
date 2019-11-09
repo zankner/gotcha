@@ -74,7 +74,7 @@ const ProfileCard = props => {
 					</div>
 				</div>
 				<hr />
-				<button className="btn btn-primary btn-lg btn-block">Tag out</button>
+				<button className="btn btn-primary btn-lg btn-block" onClick={tagOut}>Tag out</button>
 				<hr />
 				<div className="row">
 					<div className="col">

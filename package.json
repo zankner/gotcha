@@ -62,7 +62,8 @@
     "swiper": "^4.5.0",
     "twilio": "^3.33.3",
     "urijs": "latest",
-    "yup": "^0.27.0"
+    "yup": "^0.27.0",
+    "uniqid": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.5.0",
