@@ -28,7 +28,6 @@ const Home = props => {
 						<div className="mb-3 mb-sm-4">
 							<ProfileCard />
 						</div>
-						<ProfileCard />
 						<div className="mb-3 mb-sm-4">
 							<RecentTagsCard />
 						</div>
