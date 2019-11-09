@@ -30,7 +30,10 @@ const ProfileCard = props => {
 			});
 			const userOnlyRef = userRef.collection('private').doc('userOnly');
 			userOnlyRef.get().then(userOnlyDoc => {
-				setTarget(userOnlyDoc.data().target);
+				const targetRef = props.firebase.firestore().collection('users').doc(userOnlyDoc.data().target);
+				targetRef.get().then(targetDoc => {
+					setTarget(targetDoc.data().name);
+				});
 			});
 		}
 	}, [props.auth]);
