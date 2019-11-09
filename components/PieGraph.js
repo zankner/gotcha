@@ -43,6 +43,7 @@ class PieChart extends React.Component {
 		for(const grade of Object.keys(this.state)){
 			graphData.push(this.state[grade]);
 		}
+		console.log(graphData);
 		const pie = {
 			labels: [
 				`Freshman (${this.state.class4}%)`,

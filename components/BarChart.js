@@ -35,10 +35,10 @@ class BarChart extends React.Component {
 	genGraph() {
 		const bar = {
 			labels: [
-				`Freshman`,
-				`Sophomores`,
-				`Juniors`,
-				`Seniors`
+				'Freshman',
+				'Sophomores',
+				'Juniors',
+				'Seniors'
 			],
 			datasets: [{
 				data: this.state.tags,
