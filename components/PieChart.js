@@ -30,7 +30,7 @@ class PieChart extends React.Component {
 
 	getData() {
 		const userRef = this.props.firebase.firestore().collection('users');
-		for(const grade of Object.keys(this.state)){
+		for (const grade of Object.keys(this.state)) {
 		  userRef.where("tagged", "==", false).where("class", "==", grade).get().then(querySnapshot => {
 				this.setState({[grade]: querySnapshot.size});
 		  });
@@ -40,10 +40,10 @@ class PieChart extends React.Component {
 
 	genGraph() {
 		const graphData = [];
-		for(const grade of Object.keys(this.state)){
-			graphData.push(this.state[grade]);
+		const allAlive = graphData.reduce((a, b) => a + b, 0);
+		for (const grade of Object.keys(this.state)){
+			graphData.push(100*(this.state[grade] / allAlive));
 		}
-		console.log(graphData);
 		const pie = {
 			labels: [
 				`Freshman (${this.state.class4}%)`,
