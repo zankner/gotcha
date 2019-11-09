@@ -25,7 +25,6 @@ const ProfileCard = props => {
 					});
 					const distinctTags = [...new Set(dupArray)];
 					distinctTags.sort((a, b) => b - a);
-					console.log()
 					setRank(distinctTags.indexOf(userDoc.data().numTags)+1);
 				});
 			});
