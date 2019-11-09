@@ -55,8 +55,12 @@ router.post('/tag', (req, res) => {
 											statsRef.update({
 												[hunterDoc.data().class]: admin.firestore.FieldValue.increment(1)
 											}).then(()=>{
-												res.sendStatus(status.OK);
-											});
+												admin.firestore().collection('users').doc(userOnly.target).collection('private').doc('adminOnly').update({
+													hunter: hunterUid
+												}).then(()=>{
+													res.sendStatus(status.OK);
+												});
+											})
 										})
 									})
 								})
