@@ -47,13 +47,13 @@ router.post('/tag', (req, res) => {
 									name: user.name,
 									tagged: uid
 								}).then(()=> {
-									userRef.collection('private').doc('userOnly').update({
-										tags: {[timestamp]:tagRef}
+									hunterRef.collection('private').doc('userOnly').update({
+										tags: admin.firestore.FieldValue.arrayUnion({[timestamp]: tagRef})
 									}).then(()=> {
-										const statsRef = admin.firestore().collection('stas').doc('sumTags');
-										hunterRef.get((hunterDoc) => {
+										const statsRef = admin.firestore().collection('stats').doc('sumTags');
+										hunterRef.get().then((hunterDoc) => {
 											statsRef.update({
-												[hunterDoc.class]: admin.firestore.FieldValue.increment(1)
+												[hunterDoc.data().class]: admin.firestore.FieldValue.increment(1)
 											}).then(()=>{
 												res.sendStatus(status.OK);
 											});
