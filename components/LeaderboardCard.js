@@ -10,30 +10,20 @@ const LeaderboardCard = (props) => {
 	const [leaderboard, setLeaderboard] = useState([]);
 
 	useEffect(() => {
-		const statsRef = props.firebase.firestore().collection('stats').doc('uniqueTags');
-		statsRef.get().then(statsDoc => {
-			const statsData = statsDoc.data();
-			const validKeys = [];
-
-			Object.keys(statsData).forEach(uniqueTag => {
-				if (statsData[uniqueTag] !== 0) {
-					validKeys.push(parseInt(uniqueTag, 10));
-				}
+		const userCollection = props.firebase.firestore().collection('users');
+		userCollection.get().then(querySnapshot => {
+			const dupArray = querySnapshot.docs.map(doc => {
+				return doc.data().numTags;
 			});
-
-			validKeys.sort((a, b) => {
-				return b - a;
-			});
-
-			const userRef = props.firebase.firestore().collection('users');
-			userRef.where('tagged', '==', false).orderBy('numTags', 'desc').get().then(snapshot => {
-				setLeaderboard(snapshot.docs.map(doc => {
+			const distinctTags = [...new Set(dupArray)];
+			distinctTags.sort((a, b) => b - a);
+			userCollection.get().then(querySnapshot => {
+				setLeaderboard(querySnapshot.docs.map(doc => {
 					const { name, numTags } = doc.data();
-					const rank = validKeys.indexOf(numTags) + 1;
-
+					const rank = distinctTags.indexOf(doc.data().numTags)+1;
 					return { numTags, name, rank };
-				}));
-			});
+				}))
+			})
 		});
 	}, []);
 
