@@ -6,6 +6,7 @@ import { compose } from 'redux';
 import { connect } from 'react-redux';
 import ProfileCard from '../components/ProfileCard';
 import LeaderboardCard from '../components/LeaderboardCard';
+import RecentTagsCard from '../components/RecentTagsCard';
 
 const Home = props => {
 	useEffect(() => {
@@ -22,8 +23,11 @@ const Home = props => {
 		<Layout>
 			<div className="container min-vh-100">
 				<div className="row vh-100 pt-nav">
-					<div className="col-12 col-lg-6 py-3 py-sm-5">
+					<div className="col-12 col-lg-6 pb-3 pb-sm-4 pb-lg-5 pt-3 pt-sm-5">
 						<ProfileCard />
+						<div className="mt-3 mt-sm-4">
+							<RecentTagsCard />
+						</div>
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
 						<LeaderboardCard />
