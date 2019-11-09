@@ -1,4 +1,4 @@
-$primary: #f4cd45;
+$primary: #3869a1;
 $navbarHeight: 72px;
 
 @import "node_modules/bootstrap/scss/bootstrap";
@@ -8,7 +8,9 @@ $navbarHeight: 72px;
     $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
     @each $prop, $abbrev in (width: w, height: h) {
       @each $size, $length in $sizes {
-        .#{$abbrev}#{$infix}-#{$size} { #{$prop}: $length !important; }
+        .#{$abbrev}#{$infix}-#{$size} {
+          #{$prop}: $length !important;
+        }
       }
     }
   }
@@ -16,6 +18,11 @@ $navbarHeight: 72px;
 
 html, body {
   font-family: 'Poppins', sans-serif;
+  background: url("/img/background.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 .pt-nav {
