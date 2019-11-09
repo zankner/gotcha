@@ -1,19 +1,34 @@
 import React from 'react';
-import HomeProfileCard from '../components/HomeProfileCard';
-import TaggedCard from '../components/TaggedCard';
+import Layout from './Layout';
+import { withRouter } from 'react-router-dom';
+import { withFirebase } from 'react-redux-firebase';
+import { compose } from 'redux';
+import { connect } from 'react-redux';
+import ProfileCard from '../components/ProfileCard';
+import LeaderboardCard from '../components/LeaderboardCard';
 
-const Home = () => (
-	<>
-		<HomeProfileCard />
-		<div className="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-			<TaggedCard />
-			<TaggedCard />
+const Home = props => (
+	<Layout>
+		<div className="container min-vh-100">
+			<div className="row vh-100 pt-nav">
+				<div className="col-12 col-lg-6 py-5">
+					<ProfileCard />
+				</div>
+				<div className="col-12 col-lg-6 pb-5 pt-lg-5">
+					<LeaderboardCard />
+				</div>
+			</div>
 		</div>
-		<div className="d-md-flex flex-md-equal w-100 my-md-3 pl-md-3">
-			<TaggedCard />
-			<TaggedCard />
-		</div>
-	</>
+	</Layout>
 );
 
-export default Home;
+const mapStateToProps = state => ({
+	auth: state.firebase.auth,
+	profile: state.firebase.profile
+});
+
+export default compose(
+	connect(mapStateToProps),
+	withFirebase,
+	withRouter
+)(Home);
