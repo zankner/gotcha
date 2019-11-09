@@ -41,9 +41,12 @@ class PieChart extends React.Component {
 
 	genGraph() {
 		const graphData = [];
-		const allAlive = graphData.reduce((a, b) => a + b, 0);
 		for (const grade of Object.keys(this.state)){
-			graphData.push(100*(this.state[grade] / allAlive));
+			graphData.push(this.state[grade]);
+		}
+		const allAlive = graphData.reduce((a, b) => a + b, 0);
+		for (const x in graphData) {
+			graphData[x] = 100*(graphData[x] / allAlive);
 		}
 		const pie = {
 			labels: [

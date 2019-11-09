@@ -9,13 +9,73 @@ import { connect } from 'react-redux';
 class TagHistory extends React.Component {
 	constructor(props) {
 		super(props);
+		this.state = {
+			'tagHistory': null
+		};
+	}
+
+	componentDidMount() {
+		this.getData();
+		this.componentDidUpdate();
+	}
+
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		this.genTableBody();
+	}
+
+	getData() {
+		// api call
+		this.setState({tagHistory: [
+			{
+				name: 'Ben',
+				class: 'II',
+				time: 'Monday'
+			},
+			{
+				name: 'Zack',
+				class: 'I',
+				time: 'Tuesday'
+			},
+			{
+				name: 'Slim',
+				class: 'I',
+				time: 'Thursday'
+			}
+		]});
+	}
+
+	genTableBody() {
+		this.tableBody = [];
+		console.log(this.state.tagHistory);
+		for (const x in this.state.tagHistory) {
+			this.tableBody.push(
+				<tr>
+					<th>{this.state.tagHistory.indexOf(this.state.tagHistory[x])}</th>
+					<th>{this.state.tagHistory[x].name}</th>
+					<th>{`Class ${this.state.tagHistory[x].class}`}</th>
+					<th>{this.state.tagHistory[x].time}</th>
+				</tr>
+			);
+		}
 	}
 
 	render() {
 		return (
 			<div>
-
-	  </div>
+				<table className="table">
+					<thead className="thead-dark">
+					 <tr>
+				      <th>#</th>
+				      <th>Name</th>
+				      <th>Class</th>
+				      <th>Time</th>
+				    </tr>
+			  	</thead>
+			  	<tbody>
+			  		{this.tableBody}
+			  	</tbody>
+			  </table>
+	  	</div>
 		);
 	}
 }
