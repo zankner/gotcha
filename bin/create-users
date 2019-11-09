@@ -35,9 +35,10 @@ for(let row in students){
 	rowCounter += 1;
 }
 
-// for(let i=0; i<toAdd.length; i++){
-// 	admin.firestore().collection('users').doc(toAdd[i].email).set(toAdd[i]);
-// }
+for(let i=0; i<toAdd.length; i++){
+	admin.firestore().collection('users').doc(toAdd[i].email).set(toAdd[i]);
+}
+
 shuffle(studentIds);
 for(let i=0; i<studentIds.length; i+=1){
 	if(i === studentIds.length - 1){
@@ -69,10 +70,4 @@ for(let i=0; i<adminIds.length; i+=1){
 		})
 	}
 }
-
-// const studentIds = Object.keys(students);
-// shuffle(studentIds);
-// for(let i = 0; i < studentIds.length; i += 2){
-//
-// }
 
