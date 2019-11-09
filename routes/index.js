@@ -12,35 +12,48 @@ router.get('/*', (req, res) => {
 
 router.post('/tag', (req, res) => {
 	const token = req.body.token;
+	const lastWords = req.body.lastWords;
 
-	if(!token){
+	if(!token || !lastWords){
 		return res.sendStatus(status.NOT_ACCEPTABLE);
 	}
 
 	admin.auth().verifyIdToken(token).then(decodedToken => {
 		const uid = decodedToken.email;
 		const userRef = admin.firestore().collection('users').doc(uid);
-		userRef.collection('private').doc('userOnly').get().then(userOnlyDoc => {
-			const userOnly = userOnlyDoc.data();
-			userRef.collection('private').doc('adminOnly').get().then(adminOnlyDoc => {
-				const adminOnly = adminOnlyDoc.data();
-				const hunterUid = adminOnly.hunter;
-				const hunterRef = admin.firestore().collection('users').doc(hunterUid);
-				hunterRef.update({
-					'numTags': admin.firestore.FieldValue.increment(1)
-				}).then(() => {
-					hunterRef.collection('private').doc('userOnly').update({
-						'target': userOnly.target
-					}).then(()=>{
-						userRef.update({
-							'tagged': true
-						}).then(()=>{
-							res.send(status.OK);
+		userRef.get().then(userDoc => {
+			const user = userDoc.data();
+			userRef.collection('private').doc('userOnly').get().then(userOnlyDoc => {
+				const userOnly = userOnlyDoc.data();
+				userRef.collection('private').doc('adminOnly').get().then(adminOnlyDoc => {
+					const adminOnly = adminOnlyDoc.data();
+					const hunterUid = adminOnly.hunter;
+					const hunterRef = admin.firestore().collection('users').doc(hunterUid);
+					hunterRef.update({
+						'numTags': admin.firestore.FieldValue.increment(1)
+					}).then(() => {
+						hunterRef.collection('private').doc('userOnly').update({
+							'target': userOnly.target
+						}).then(() => {
+							userRef.update({
+								'tagged': true
+							}).then(() => {
+								const tagId = uniqid();
+								const tagRef = admin.firestore().collection('tags').doc(tagId);
+								tagRef.set({
+									timestamp: Date.now(),
+									lastWords: lastWords,
+									name: user.name,
+									tagged: uid
+								}).then(()=> {
+									res.sendStatus(status.OK);
+								})
+							})
 						})
 					})
 				})
 			})
-		})
+		});
 	});
 });
 
