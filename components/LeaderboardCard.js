@@ -45,8 +45,8 @@ const LeaderboardCard = (props) => {
 		<div className="card">
 			<div className="card-header header text-uppercase">Leaderboard</div>
 			<ul className="list-group list-group-flush">
-				{leaderboard.map(player => (
-					<li className="list-group-item d-flex justify-content-between align-items-center" key={player.rank}>
+				{leaderboard.map((player, index) => (
+					<li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
 						{player.rank}. {player.name}
 						<span className="badge badge-primary badge-pill">{player.numTags}</span>
 					</li>
