@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -6,7 +6,20 @@ import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-const LeaderboardCard = () => {
+const LeaderboardCard = (props) => {
+	const [leaderboard, setLeaderboard] = useState([]);
+
+	useEffect(() => {
+		const userRef = props.firebase.firestore().collection('users');
+		userRef.where("tagged", "==", false).orderBy("tags", "desc").get().then(querySnapshot => {
+			querySnapshot.forEach(doc => {
+				const {name, tags} = doc.data();
+				setLeaderboard(leaderboard.concat({[name]: tags}));
+			});
+		});
+
+	}, []);
+
 	return (
 		<div className="card">
 			<div className="card-header header text-uppercase">Leaderboard</div>
