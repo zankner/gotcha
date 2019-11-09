@@ -11,10 +11,10 @@ const Home = props => (
 	<Layout>
 		<div className="container min-vh-100">
 			<div className="row vh-100 pt-nav">
-				<div className="col-12 col-lg-6 py-5">
+				<div className="col-12 col-lg-6 py-3 py-sm-5">
 					<ProfileCard />
 				</div>
-				<div className="col-12 col-lg-6 pb-5 pt-lg-5">
+				<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
 					<LeaderboardCard />
 				</div>
 			</div>
