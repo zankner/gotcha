@@ -22,15 +22,12 @@ const ProfileCard = props => {
 				statsRef.get().then(statsDoc => {
 					const stats = statsDoc.data();
 					const validKeys = [];
-					console.log(stats);
 					Object.keys(stats).forEach(uniqueTag => {
 						if (stats[uniqueTag] !== 0) {
 							validKeys.push(parseInt(uniqueTag, 10));
 						}
 					});
 					validKeys.sort((a, b) => b - a);
-					console.log(validKeys);
-					console.log(validKeys.indexOf(userDoc.data().numTags));
 					setRank(validKeys.indexOf(userDoc.data().numTags) + 1);
 				});
 				const userOnlyRef = userRef.collection('private').doc('userOnly');
@@ -51,7 +48,7 @@ const ProfileCard = props => {
 			<div className="card-body p-4">
 				<div className="row mb-4 mb-lg-0 h-100 mb-lg-auto d-flex align-items-center">
 					<div className="col-2 col-lg-3">
-						<img src={profile.photoURL} className="rounded-circle w-100 img-thumbnail" alt=""/>
+						<img src={profile.photoURL} className="rounded-circle w-100 img-thumbnail" alt="" />
 					</div>
 					<div className="col-10 col-lg-9 h-100 d-flex align-items-center pl-0">
 						<div>
@@ -60,9 +57,9 @@ const ProfileCard = props => {
 						</div>
 					</div>
 				</div>
-				<hr/>
+				<hr />
 				<button className="btn btn-primary btn-lg btn-block">Tag out</button>
-				<hr/>
+				<hr />
 				<div className="row">
 					<div className="col">
 						<div className="card">
