@@ -5,6 +5,7 @@ import 'firebase/auth';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import moment from 'moment'
 
 const RecentTagsCard = props => {
 	const [recentTags, setRecentTags] = useState([]);
@@ -13,33 +14,32 @@ const RecentTagsCard = props => {
 		const tagRef = props.firebase.firestore().collection('tags');
 		tagRef.orderBy('date', 'desc').limit(5).get().then(querySnapshot => {
 			setRecentTags(querySnapshot.docs.map(doc => {
-				const { name, date, finalWords } = doc.data();
-				return { name, date, finalWords };
+				const { name, timestamp, lastWords } = doc.data();
+				return { name, timestamp, lastWords };
 			}));
 		});
-
-
 	}, []);
 
 	return (
 		<div className="card">
 			<div className="card-header header text-uppercase">Recent Tags</div>
 			<ul className="list-group list-group-flush">
-				<li className="list-group-item flex-column align-items-start">
-					<div className="d-flex w-100 justify-content-between">
-						<h5 className="mb-1 font-weight-bold">Runpeng Liu</h5>
-						<small className="text-muted">3 mins ago</small>
-					</div>
-					<p className="text-muted mb-0 mt-1">Donec id elit non mi porta gravida at eget metus. Maecenas sed diam eget risus varius blandit.</p>
-				</li>
+				{recentTags.map(tag => (
+					<li className="list-group-item flex-column align-items-start">
+						<div className="d-flex w-100 justify-content-between">
+							<h5 className="mb-1 font-weight-bold">{tag.name}</h5>
+							<small className="text-muted">{moment(tag.timestamp).fromNow()}</small>
+						</div>
+						<p className="text-muted mb-0 mt-1">{tag.lastWords}</p>
+					</li>
+				))}
 			</ul>
 		</div>
 	);
 };
 
 const mapStateToProps = state => ({
-	auth: state.firebase.auth,
-	profile: state.firebase.profile
+	auth: state.firebase.auth
 });
 
 export default compose(
