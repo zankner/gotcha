@@ -46,14 +46,13 @@ class TagHistory extends React.Component {
 
 	genTableBody() {
 		this.tableBody = [];
-		console.log(this.state.tagHistory);
 		for (const x in this.state.tagHistory) {
 			this.tableBody.push(
-				<tr>
-					<th>{this.state.tagHistory.indexOf(this.state.tagHistory[x])}</th>
-					<th>{this.state.tagHistory[x].name}</th>
-					<th>{`Class ${this.state.tagHistory[x].class}`}</th>
-					<th>{this.state.tagHistory[x].time}</th>
+				<tr key={x}>
+					<th key={`${x} index`}>{this.state.tagHistory.indexOf(this.state.tagHistory[x])}</th>
+					<th key={`${x} name`}>{this.state.tagHistory[x].name}</th>
+					<th key={`${x} class`}>{`Class ${this.state.tagHistory[x].class}`}</th>
+					<th key={`${x} time`}>{this.state.tagHistory[x].time}</th>
 				</tr>
 			);
 		}
