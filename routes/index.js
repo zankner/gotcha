@@ -10,7 +10,6 @@ router.get('/*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
 
-
 router.post('/tag', (req, res) => {
 	const token = req.body.token;
 	const lastWords = req.body.lastWords;
