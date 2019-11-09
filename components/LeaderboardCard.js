@@ -11,19 +11,17 @@ const LeaderboardCard = (props) => {
 
 	useEffect(() => {
 		const userCollection = props.firebase.firestore().collection('users');
-		userCollection.where('tagged', '==', false).get().then(querySnapshot => {
+		userCollection.where('tagged', '==', false).orderBy('numTags', 'desc').limit(10).get().then(querySnapshot => {
 			const dupArray = querySnapshot.docs.map(doc => {
 				return doc.data().numTags;
 			});
 			const distinctTags = [...new Set(dupArray)];
 			distinctTags.sort((a, b) => b - a);
-			userCollection.where('tagged', '==', false).get().then(querySnapshot => {
-				setLeaderboard(querySnapshot.docs.map(doc => {
-					const { name, numTags } = doc.data();
-					const rank = distinctTags.indexOf(doc.data().numTags) + 1;
-					return { numTags, name, rank };
-				}));
-			});
+			setLeaderboard(querySnapshot.docs.map(doc => {
+				const { name, numTags } = doc.data();
+				const rank = distinctTags.indexOf(doc.data().numTags) + 1;
+				return { numTags, name, rank };
+			}));
 		});
 	}, []);
 
