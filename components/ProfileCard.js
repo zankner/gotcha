@@ -62,7 +62,7 @@ const ProfileCard = props => {
 					<hr />
 					{!profile.tagged
 						? <button className="btn btn-primary btn-lg btn-block" onClick={tagOut}>Tag out</button>
-						: <div>If you ain't first, you're last. You're out.</div>
+						: <div className="text-center text-sm-left">If you ain't first, you're last. You're out.</div>
 					}
 					<hr />
 					<div className="row">

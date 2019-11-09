@@ -26,11 +26,11 @@ const Home = props => {
 				<div className="row vh-100 pt-nav">
 					<div className="col-12 col-lg-6 pb-3 pb-sm-4 pb-lg-5 pt-3 pt-sm-5">
 						<ProfileCard className="mb-3 mb-sm-4" />
-						<RecentTagsCard className="mb-3 mb-sm-4" />
-						<DevelopersCard />
+						<RecentTagsCard />
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
-						<LeaderboardCard />
+						<LeaderboardCard className="mb-3 mb-sm-4" />
+						<DevelopersCard />
 					</div>
 				</div>
 			</div>
