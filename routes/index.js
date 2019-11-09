@@ -1,6 +1,10 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
+const admin = require('firebase-admin');
+const moment = require('moment');
+const uniqid = require('uniqid');
+const status = require('http-status');
 
 router.get('/*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
@@ -46,17 +50,15 @@ router.post('/tag', (req, res) => {
 								}).then(()=> {
 									userRef.collection('private').doc('userOnly').update({
 										tags: {[timestamp]:tagRef}
-									}).then(() => {
-										const uniqueRef = admin.firestore().collection('stats').doc('uniqueTags');
-										hunterRef.get().then((hunterDoc) => {
-											const hunterData = hunterDoc.data();
-											uniqueRef.update({
-												[hunterData.numTags]: admin.firestore.FieldValue.increment(1),
-												[hunterData.numTags-1]: admin.firestore.FieldValue.increment(-1),
-											}).then(() => {
+									}).then(()=> {
+										const statsRef = admin.firestore().collection('stas').doc('sumTags');
+										hunterRef.get((hunterDoc) => {
+											statsRef.update({
+												[hunterDoc.class]: admin.firestore.FieldValue.increment(1)
+											}).then(()=>{
 												res.sendStatus(status.OK);
-											})
-										});
+											});
+										})
 									})
 								})
 							})
