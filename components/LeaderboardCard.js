@@ -11,7 +11,7 @@ const LeaderboardCard = (props) => {
 
 	useEffect(() => {
 		const userCollection = props.firebase.firestore().collection('users');
-			userCollection.where('tagged', '==', false).get().then(querySnapshot => {
+		userCollection.where('tagged', '==', false).get().then(querySnapshot => {
 			const dupArray = querySnapshot.docs.map(doc => {
 				return doc.data().numTags;
 			});
@@ -20,10 +20,10 @@ const LeaderboardCard = (props) => {
 			userCollection.where('tagged', '==', false).get().then(querySnapshot => {
 				setLeaderboard(querySnapshot.docs.map(doc => {
 					const { name, numTags } = doc.data();
-					const rank = distinctTags.indexOf(doc.data().numTags)+1;
+					const rank = distinctTags.indexOf(doc.data().numTags) + 1;
 					return { numTags, name, rank };
-				}))
-			})
+				}));
+			});
 		});
 	}, []);
 
@@ -32,16 +32,18 @@ const LeaderboardCard = (props) => {
 	}
 
 	return (
-		<div className="card">
-			<div className="card-header header text-uppercase">Leaderboard</div>
-			<ul className="list-group list-group-flush">
-				{leaderboard.map((player, index) => (
-					<li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
-						{player.rank}. {player.name}
-						<span className="badge badge-secondary badge-pill">{player.numTags}</span>
-					</li>
-				))}
-			</ul>
+		<div className={props.className}>
+			<div className="card">
+				<div className="card-header header text-uppercase">Leaderboard</div>
+				<ul className="list-group list-group-flush">
+					{leaderboard.map((player, index) => (
+						<li className="list-group-item d-flex justify-content-between align-items-center" key={index}>
+							{player.rank}. {player.name}
+							<span className="badge badge-secondary badge-pill">{player.numTags}</span>
+						</li>
+					))}
+				</ul>
+			</div>
 		</div>
 	);
 };

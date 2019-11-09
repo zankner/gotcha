@@ -25,12 +25,8 @@ const Home = props => {
 			<div className="container min-vh-100">
 				<div className="row vh-100 pt-nav">
 					<div className="col-12 col-lg-6 pb-3 pb-sm-4 pb-lg-5 pt-3 pt-sm-5">
-						<div className="mb-3 mb-sm-4">
-							<ProfileCard />
-						</div>
-						<div className="mb-3 mb-sm-4">
-							<RecentTagsCard />
-						</div>
+						<ProfileCard className="mb-3 mb-sm-4" />
+						<RecentTagsCard className="mb-3 mb-sm-4" />
 						<DevelopersCard />
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
