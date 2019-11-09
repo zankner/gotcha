@@ -38,9 +38,7 @@ const RecentTagsCard = props => {
 						))}
 					</ul>
 				) : (
-					<div className="card-body">
-						No tags yet. Let's get cracking.
-					</div>
+					<div className="card-body">No tags yet. Let's get cracking.</div>
 				)}
 			</div>
 		</div>

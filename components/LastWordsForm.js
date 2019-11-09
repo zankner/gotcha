@@ -20,7 +20,8 @@ const LastWordsForm = props => {
 					data: JSON.stringify({ token, lastWords })
 				}).done(() => {
 					actions.setSubmitting(false);
-					props.history.replace('/')
+					props.history.replace('/');
+					window.location.reload();
 				}).fail(() => {
 					actions.setSubmitting(false);
 					setAlert('Whoops! Something went wrong.');
