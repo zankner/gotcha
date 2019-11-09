@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import ProfileCard from '../components/ProfileCard';
 import LeaderboardCard from '../components/LeaderboardCard';
 import RecentTagsCard from '../components/RecentTagsCard';
+import DevelopersCard from '../components/DevelopersCard';
 
 const Home = props => {
 	useEffect(() => {
@@ -28,6 +29,9 @@ const Home = props => {
 						<ProfileCard />
 						<div className="mt-3 mt-sm-4">
 							<RecentTagsCard />
+						</div>
+						<div className="mt-3 mt-sm-4">
+							<DevelopersCard />
 						</div>
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
