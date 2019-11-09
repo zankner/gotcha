@@ -7,9 +7,9 @@ const LastWordsModal = () => (
 			<div className="modal-content">
 				<div className="modal-header">
 					<h2 className="modal-title header text-uppercase">Last Words</h2>
-					<a href="/" type="button" className="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" className="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-					</a>
+					</button>
 				</div>
 				<div className="modal-body">
 					<p className="text-muted">Enter some last words before tagging yourself out. Be careful; everyone can see these.</p>
