@@ -40,13 +40,25 @@ router.post('/tag', (req, res) => {
 							}).then(() => {
 								const tagId = uniqid();
 								const tagRef = admin.firestore().collection('tags').doc(tagId);
+								const timestamp = Date.now();
 								tagRef.set({
-									timestamp: Date.now(),
+									timestamp: timestamp,
 									lastWords: lastWords,
 									name: user.name,
 									tagged: uid
 								}).then(()=> {
-									res.sendStatus(status.OK);
+									userRef.collection('private').doc('userOnly').update({
+										tags: {[timestamp]:tagRef}
+									}).then(()=> {
+										const statsRef = admin.firestore().collection('stas').doc('sumTags');
+										hunterRef.get((hunterDoc) => {
+											statsRef.update({
+												[hunterDoc.class]: admin.firestore.FieldValue.increment(1)
+											}).then(()=>{
+												res.sendStatus(status.OK);
+											});
+										})
+									})
 								})
 							})
 						})

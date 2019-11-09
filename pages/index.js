@@ -1,26 +1,43 @@
-import React from 'react';
-import Layout from './Layout';
+import React, { useEffect } from 'react';
+import Layout from '../components/Layout';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import ProfileCard from '../components/ProfileCard';
 import LeaderboardCard from '../components/LeaderboardCard';
+import RecentTagsCard from '../components/RecentTagsCard';
 
-const Home = props => (
-	<Layout>
-		<div className="container min-vh-100">
-			<div className="row vh-100 pt-nav">
-				<div className="col-12 col-lg-6 py-3 py-sm-5">
-					<ProfileCard />
-				</div>
-				<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
-					<LeaderboardCard />
+const Home = props => {
+	useEffect(() => {
+		if (props.auth.isLoaded && props.auth.isEmpty) {
+			console.log('Redirecting to login...');
+			props.history.replace('/login')
+		}
+	}, [props.auth]);
+
+	if (props.auth.isEmpty) {
+		return '';
+	}
+
+	return (
+		<Layout>
+			<div className="container min-vh-100">
+				<div className="row vh-100 pt-nav">
+					<div className="col-12 col-lg-6 pb-3 pb-sm-4 pb-lg-5 pt-3 pt-sm-5">
+						<ProfileCard />
+						<div className="mt-3 mt-sm-4">
+							<RecentTagsCard />
+						</div>
+					</div>
+					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
+						<LeaderboardCard />
+					</div>
 				</div>
 			</div>
-		</div>
-	</Layout>
-);
+		</Layout>
+	);
+};
 
 const mapStateToProps = state => ({
 	auth: state.firebase.auth,

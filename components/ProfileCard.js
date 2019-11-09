@@ -18,25 +18,24 @@ const ProfileCard = props => {
 			userRef.get().then(userDoc => {
 				setProfile(userDoc.data());
 				setNumTags(userDoc.data().numTags);
-				const statsRef = props.firebase.firestore().collection('stats').doc('uniqueTags');
-				statsRef.get().then(statsDoc => {
-					const stats = statsDoc.data();
-					const validKeys = [];
-					Object.keys(stats).forEach(uniqueTag => {
-						if (stats[uniqueTag] !== 0) {
-							validKeys.push(parseInt(uniqueTag, 10));
-						}
+				const userCollection = props.firebase.firestore().collection('users');
+				userCollection.get().then(querySnapshot => {
+					const dupArray = querySnapshot.docs.map(doc => {
+						return doc.data().numTags;
 					});
-					validKeys.sort((a, b) => b - a);
-					setRank(validKeys.indexOf(userDoc.data().numTags) + 1);
+					const distinctTags = [...new Set(dupArray)];
+					distinctTags.sort((a, b) => b - a);
+					console.log()
+					setRank(distinctTags.indexOf(userDoc.data().numTags)+1);
 				});
-				const userOnlyRef = userRef.collection('private').doc('userOnly');
-				userOnlyRef.get().then(userOnlyDoc => {
-					setTarget(userOnlyDoc.data().target);
-				});
+			});
+			const userOnlyRef = userRef.collection('private').doc('userOnly');
+			userOnlyRef.get().then(userOnlyDoc => {
+				setTarget(userOnlyDoc.data().target);
 			});
 		}
 	}, [props.auth]);
+
 
 	const tagOut = () => {
 		if(props.auth.isLoaded){
@@ -46,7 +45,8 @@ const ProfileCard = props => {
 					url: '/tag',
 					contentType: 'application/json',
 					data: JSON.stringify({
-						token: token
+						token: token,
+						lastWords: 'test final words'
 					})
 				});
 
@@ -63,14 +63,14 @@ const ProfileCard = props => {
 		<div className="card justify-content-center">
 			<div className="card-header header text-uppercase">Profile</div>
 			<div className="card-body p-4">
-				<div className="row mb-4 mb-lg-0 h-100 mb-lg-auto d-flex align-items-center">
-					<div className="col-2 col-lg-3">
-						<img src={profile.photoURL} className="rounded-circle w-100 img-thumbnail" alt=""/>
+				<div className="row mb-3 mb-lg-0 h-100 mb-lg-auto d-flex align-items-center">
+					<div className="col-12 col-sm-3 col-md-2 col-lg-3 text-center text-sm-left mb-3 mb-sm-0">
+						<img src={profile.photoURL} className="rounded-circle w-100 img-thumbnail profile-photo" alt="" />
 					</div>
-					<div className="col-10 col-lg-9 h-100 d-flex align-items-center pl-0">
-						<div>
-							<h2 className="mb-0 font-weight-bold text-uppercase">{profile.name}</h2>
-							<span>{profile.email}</span>
+					<div className="col-12 col-sm-9 col-md-10 col-lg-9 h-100 d-flex align-items-center p-0">
+						<div className="text-center text-sm-left m-auto m-sm-0">
+							<h3 className="mb-0 font-weight-bold text-uppercase d-block text-center text-sm-left">{profile.name}</h3>
+							<span className="d-block">{profile.email}</span>
 						</div>
 					</div>
 				</div>

@@ -1,4 +1,5 @@
 $primary: #3869a1;
+$secondary: #dce8f1;
 $navbarHeight: 72px;
 
 @import "node_modules/bootstrap/scss/bootstrap";
@@ -79,4 +80,8 @@ html, body {
 .navbar .nav-link {
   font-size: 0.9rem;
   font-weight: bold;
+}
+
+.profile-photo {
+  max-width: 100px;
 }
