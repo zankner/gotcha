@@ -46,7 +46,7 @@ const rrfProps = {
 
 // Initialize Font Awesome
 library.add(fas);
-console.log('ok');
+
 render(
 	<Provider store={store}>
 		<ReactReduxFirebaseProvider {...rrfProps}>

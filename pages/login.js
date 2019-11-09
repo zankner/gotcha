@@ -6,22 +6,19 @@ import { withFirebase } from 'react-redux-firebase';
 import { withRouter } from 'react-router-dom';
 
 const Login = props => {
-	function loginWithProvider(provider) {
-		props.firebase.login({ provider: provider, type: 'popup' }).then(() => {
-			const query = parse(props.location.search);
-			if (query.redirect) {
-				return props.history.push(query.redirect);
-			}
-
-			props.history.push('/');
-		}).catch(err => {
-			console.log(err);
-		});
-	}
-
 	return (
 		<button type="button" onClick={() => {
-			loginWithProvider('google');
+			const provider = new props.firebase.auth.GoogleAuthProvider();
+			props.firebase.auth().signInWithPopup(provider).then(() => {
+				const query = parse(props.location.search);
+				if (query.redirect) {
+					return props.history.push(query.redirect);
+				}
+
+				props.history.push('/');
+			}).catch(err => {
+				console.log(err);
+			});
 		}} className="btn btn btn-outline-muted btn-block btn-social mb-3">
 			<i className="fa-2x fa-google fab btn-social-icon" />Sign in <span className="d-none d-sm-inline">with Google</span>
 		</button>
@@ -29,8 +26,7 @@ const Login = props => {
 };
 
 const mapStateToProps = state => ({
-	auth: state.firebase.auth,
-	profile: state.firebase.profile
+	auth: state.firebase.auth
 });
 
 export default compose(
