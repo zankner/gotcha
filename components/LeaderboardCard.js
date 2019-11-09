@@ -10,11 +10,23 @@ const LeaderboardCard = (props) => {
 	const [leaderboard, setLeaderboard] = useState([]);
 
 	useEffect(() => {
-		const userRef = props.firebase.firestore().collection('users');
-		userRef.where("tagged", "==", false).orderBy("tags", "desc").get().then(querySnapshot => {
-			querySnapshot.forEach(doc => {
-				const {name, tags} = doc.data();
-				setLeaderboard(leaderboard.concat({[name]: tags}));
+		const statsRef = props.firebase.firestore().collection('stats').doc('uniqueTags');
+		statsRef.get().then(statsDoc => {
+			const statsData = statsDoc.data();
+			const validKeys = [];
+			Object.keys(statsData).forEach(uniqueTag => {
+				if(statsData[uniqueTag] !== 0){
+					validKeys.push(uniqueTag);
+				}
+			});
+			validKeys.sort((a,b) => {return b-a});
+			const userRef = props.firebase.firestore().collection('users');
+			userRef.where("tagged", "==", false).orderBy("numTags", "desc").get().then(snapshot => {
+				setLeaderboard(snapshot.docs.map(doc => {
+					const {name, numTags} = doc.data();
+					const rank = validKeys.indexOf(numTags) + 1;
+					return {[name]: {numTags, rank}}
+				}));
 			});
 		});
 
