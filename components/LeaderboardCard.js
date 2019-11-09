@@ -16,7 +16,7 @@ const LeaderboardCard = (props) => {
 			const validKeys = [];
 			Object.keys(statsData).forEach(uniqueTag => {
 				if(statsData[uniqueTag] !== 0){
-					validKeys.push(uniqueTag);
+					validKeys.push(parseInt(uniqueTag, 10));
 				}
 			});
 			validKeys.sort((a,b) => {return b-a});
