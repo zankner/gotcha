@@ -10,7 +10,7 @@ const LastWordsModal = props => (
 				<div className="modal-header">
 					<h2 className="modal-title header text-uppercase">Last Words</h2>
 					<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {
-						props.history.push('/')
+						props.history.replace('/')
 					}}>
 						<span aria-hidden="true">&times;</span>
 					</button>
