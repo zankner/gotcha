@@ -25,7 +25,7 @@ const RecentTagsCard = props => {
 			<div className="card-header header text-uppercase">Recent Tags</div>
 			<ul className="list-group list-group-flush">
 				{recentTags.map(tag => (
-					<li className="list-group-item flex-column align-items-start">
+					<li className="list-group-item flex-column align-items-start" key={tag.name}>
 						<div className="d-flex w-100 justify-content-between">
 							<h5 className="mb-1 font-weight-bold">{tag.name}</h5>
 							<small className="text-muted">{moment(tag.timestamp).fromNow()}</small>
