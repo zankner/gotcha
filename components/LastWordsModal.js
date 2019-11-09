@@ -1,13 +1,17 @@
 import React from 'react';
 import LastWordsForm from './LastWordsForm'
+import { compose } from 'redux';
+import { withRouter } from 'react-router-dom';
 
-const LastWordsModal = () => (
+const LastWordsModal = props => (
 	<div className="modal fade" id="lastWordsModal" tabIndex="-1" role="dialog" aria-hidden="true">
 		<div className="modal-dialog modal-dialog-centered" role="document">
 			<div className="modal-content">
 				<div className="modal-header">
 					<h2 className="modal-title header text-uppercase">Last Words</h2>
-					<button type="button" className="close" data-dismiss="modal" aria-label="Close">
+					<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {
+						props.history.push('/')
+					}}>
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
@@ -20,4 +24,6 @@ const LastWordsModal = () => (
 	</div>
 );
 
-export default LastWordsModal
+export default compose(
+	withRouter
+)(LastWordsModal);
