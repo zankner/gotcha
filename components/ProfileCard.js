@@ -49,7 +49,7 @@ const ProfileCard = props => {
 			<div className="card-body p-4">
 				<div className="row mb-3 mb-lg-0 h-100 mb-lg-auto d-flex align-items-center">
 					<div className="col-12 col-sm-3 col-md-2 col-lg-3 text-center text-sm-left mb-3 mb-sm-0">
-						<img src={profile.photoURL} className="rounded-circle w-100 img-thumbnail profile-photo" alt="" />
+						<img src={props.firebase.auth().currentUser.photoURL} className="rounded-circle w-100 img-thumbnail profile-photo" alt="" />
 					</div>
 					<div className="col-12 col-sm-9 col-md-10 col-lg-9 h-100 d-flex align-items-center p-0">
 						<div className="text-center text-sm-left m-auto m-sm-0">
