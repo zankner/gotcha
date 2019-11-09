@@ -20,7 +20,7 @@ const LastWordsForm = props => {
 					data: JSON.stringify({ token, lastWords })
 				}).done(() => {
 					actions.setSubmitting(false);
-					$('#lastWordsModal').modal('toggle');
+					props.history.push('/')
 				}).fail(() => {
 					actions.setSubmitting(false);
 					setAlert('Whoops! Something went wrong.');
