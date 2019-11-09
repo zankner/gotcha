@@ -6,10 +6,18 @@ import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 
-const RecentTagsCard = () => {
+const RecentTagsCard = props => {
 	const [recentTags, setRecentTags] = useState([]);
 
 	useEffect(() => {
+		const tagRef = props.firebase.firestore().collection('tags');
+		tagRef.orderBy('date', 'desc').limit(5).get().then(querySnapshot => {
+			setRecentTags(querySnapshot.docs.map(doc => {
+				const { name, date, finalWords } = doc.data();
+				return { name, date, finalWords };
+			}));
+		});
+
 
 	}, []);
 
