@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -11,10 +11,10 @@ const LeaderboardCard = (props) => {
 
 	useEffect(() => {
 		const userRef = props.firebase.firestore().collection('users');
-		userRef.where("tagged", "==", false).orderBy("tags", "desc").get().then(querySnapshot => {
+		userRef.where('tagged', '==', false).orderBy('tags', 'desc').get().then(querySnapshot => {
 			querySnapshot.forEach(doc => {
-				const {name, tags} = doc.data();
-				setLeaderboard(leaderboard.concat({[name]: tags}));
+				const { name, tags } = doc.data();
+				setLeaderboard(leaderboard.concat({ [name]: tags }));
 			});
 		});
 
