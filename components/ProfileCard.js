@@ -22,15 +22,12 @@ const ProfileCard = props => {
 				statsRef.get().then(statsDoc => {
 					const stats = statsDoc.data();
 					const validKeys = [];
-					console.log(stats);
 					Object.keys(stats).forEach(uniqueTag => {
 						if (stats[uniqueTag] !== 0) {
 							validKeys.push(parseInt(uniqueTag, 10));
 						}
 					});
 					validKeys.sort((a, b) => b - a);
-					console.log(validKeys);
-					console.log(validKeys.indexOf(userDoc.data().numTags));
 					setRank(validKeys.indexOf(userDoc.data().numTags) + 1);
 				});
 				const userOnlyRef = userRef.collection('private').doc('userOnly');
@@ -40,6 +37,23 @@ const ProfileCard = props => {
 			});
 		}
 	}, [props.auth]);
+
+	const tagOut = () => {
+		if(props.auth.isLoaded){
+			props.firebase.auth().currentUser.getIdToken().then(token => {
+				const request = $.ajax({
+					method: 'POST',
+					url: '/tag',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						token: token
+					})
+				});
+
+				request.done(() => {console.log('completed')});
+			});
+		}
+	};
 
 	if (!profile) {
 		return '';
@@ -61,7 +75,7 @@ const ProfileCard = props => {
 					</div>
 				</div>
 				<hr/>
-				<button className="btn btn-primary btn-lg btn-block">Tag out</button>
+				<button className="btn btn-primary btn-lg btn-block" onClick={tagOut}>Tag out</button>
 				<hr/>
 				<div className="row">
 					<div className="col">
