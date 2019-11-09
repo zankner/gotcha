@@ -1,0 +1,78 @@
+#!/usr/bin/env node
+
+const admin = require('firebase-admin');
+const shuffle = require('shuffle-array');
+const loadJsonFile = require('load-json-file');
+
+// Set up Firebase
+const serviceAccount = require('../service-account-key.json');
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://gotcha-67060.firebaseio.com'
+});
+
+
+students = loadJsonFile.sync('lib/gotcha-data.json');
+let studentIds = [];
+let rowCounter = 0;
+let toAdd = [];
+for(let row in students){
+	if (students.hasOwnProperty(row) && rowCounter > 1 && (students[row]['Unnamed: 2'] === 'Class I' || students[row]['Unnamed: 2'] === 'Class II' || students[row]['Unnamed: 2'] === 'Class III' || students[row]['Unnamed: 2'] === 'Class IV')) {
+		const uid = students[row]['Unnamed: 6'].toLowerCase();
+		const name = `${students[row]['Unnamed: 5'] || students[row]['Unnamed: 4']} ${students[row]['Unnamed: 3']}`;
+		const temp = {
+			class: students[row]['Unnamed: 1'],
+			email: uid,
+			name: name,
+			numTags: 0,
+			photoUrl: '',
+			tagged: false
+		};
+		toAdd.push(temp);
+		studentIds.push(uid);
+	}
+	rowCounter += 1;
+}
+
+// for(let i=0; i<toAdd.length; i++){
+// 	admin.firestore().collection('users').doc(toAdd[i].email).set(toAdd[i]);
+// }
+shuffle(studentIds);
+for(let i=0; i<studentIds.length; i+=1){
+	if(i === studentIds.length - 1){
+		const target = studentIds[0];
+		admin.firestore().collection('users').doc(studentIds[i]).collection('private').doc('userOnly').set({
+			tags: [],
+			target: target
+		})
+	} else {
+		const target = studentIds[i + 1];
+		admin.firestore().collection('users').doc(studentIds[i]).collection('private').doc('userOnly').set({
+			tags: [],
+			target: target
+		})
+	}
+}
+
+let adminIds = studentIds.reverse();
+for(let i=0; i<adminIds.length; i+=1){
+	if(i === adminIds.length - 1){
+		const hunter = adminIds[0];
+		admin.firestore().collection('users').doc(studentIds[i]).collection('private').doc('adminOnly').set({
+			hunter: hunter
+		})
+	} else {
+		const hunter = studentIds[i + 1];
+		admin.firestore().collection('users').doc(studentIds[i]).collection('private').doc('adminOnly').set({
+			hunter: hunter
+		})
+	}
+}
+
+// const studentIds = Object.keys(students);
+// shuffle(studentIds);
+// for(let i = 0; i < studentIds.length; i += 2){
+//
+// }
+
