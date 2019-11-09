@@ -1,1 +1,87 @@
-@import "core";
+$primary: #3869a1;
+$secondary: #dce8f1;
+$navbarHeight: 72px;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    @each $prop, $abbrev in (width: w, height: h) {
+      @each $size, $length in $sizes {
+        .#{$abbrev}#{$infix}-#{$size} {
+          #{$prop}: $length !important;
+        }
+      }
+    }
+  }
+}
+
+html, body {
+  font-family: 'Poppins', sans-serif;
+  background: url("/img/background.svg") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.pt-nav {
+  padding-top: $navbarHeight;
+}
+
+.navbar {
+  min-height: $navbarHeight;
+}
+
+.header {
+  font-family: 'Archivo Black', sans-serif;
+}
+
+.form-label {
+  color: $gray-600;
+  font-size: $font-size-base * .8;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.btn {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-weight: bold;
+  padding: 0.525rem 0.75rem;
+  font-size: 0.8rem;
+  border-radius: 0.4rem;
+}
+
+.btn-lg {
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.6rem;
+}
+
+.no-resize {
+  resize: none;
+}
+
+.monospace {
+  font-family: monospace;
+}
+
+.bg-dark {
+  background-color: $gray-800 !important;
+}
+
+.border, .border-right, .border-left, .border-top, .border-bottom {
+  border-color: #0000001a !important;
+}
+
+.navbar .nav-link {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+.profile-photo {
+  max-width: 100px;
+}

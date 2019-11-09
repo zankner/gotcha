@@ -1,40 +1,20 @@
 import React from 'react';
-import { parse } from 'query-string';
-import { compose } from 'redux';
-import { connect } from 'react-redux';
-import { withFirebase } from 'react-redux-firebase';
-import { withRouter } from 'react-router-dom';
+import LoginForm from '../components/LoginForm';
+import Layout from '../components/Layout';
 
-const Login = props => {
-	function loginWithProvider(provider) {
-		props.firebase.login({ provider: provider, type: 'popup' }).then(() => {
-			const query = parse(props.location.search);
-			if (query.redirect) {
-				return props.history.push(query.redirect);
-			}
+const Login = () => (
+	<Layout>
+		<div className="container min-vh-100">
+			<div className="row vh-100 pt-nav align-items-center">
+				<div className="col py-auto justify-content-center">
+					<div className="card p-4 p-md-4 mx-auto w-100 w-md-75 w-lg-50">
+						<h1 className="font-weight-bold mb-3 text-center">Welcome to Gotcha</h1>
+						<LoginForm />
+					</div>
+				</div>
+			</div>
+		</div>
+	</Layout>
+);
 
-			props.history.push('/');
-		}).catch(err => {
-			console.log(err);
-		});
-	}
-
-	return (
-		<button type="button" onClick={() => {
-			loginWithProvider('google');
-		}} className="btn btn btn-outline-muted btn-block btn-social mb-3">
-			<i className="fa-2x fa-google fab btn-social-icon" />Sign in <span className="d-none d-sm-inline">with Google</span>
-		</button>
-	);
-};
-
-const mapStateToProps = state => ({
-	auth: state.firebase.auth,
-	profile: state.firebase.profile
-});
-
-export default compose(
-	connect(mapStateToProps),
-	withFirebase,
-	withRouter
-)(Login);
+export default Login;
