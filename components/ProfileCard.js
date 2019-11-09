@@ -25,7 +25,7 @@ const ProfileCard = props => {
 					});
 					const distinctTags = [...new Set(dupArray)];
 					distinctTags.sort((a, b) => b - a);
-					setRank(distinctTags.indexOf(userDoc.data().numTags)+1);
+					setRank(distinctTags.indexOf(userDoc.data().numTags) + 1);
 				});
 			});
 			const userOnlyRef = userRef.collection('private').doc('userOnly');
@@ -35,9 +35,8 @@ const ProfileCard = props => {
 		}
 	}, [props.auth]);
 
-
 	const tagOut = () => {
-		if(props.auth.isLoaded){
+		if (props.auth.isLoaded) {
 			props.firebase.auth().currentUser.getIdToken().then(token => {
 				const request = $.ajax({
 					method: 'POST',
@@ -49,7 +48,9 @@ const ProfileCard = props => {
 					})
 				});
 
-				request.done(() => {console.log('completed')});
+				request.done(() => {
+					console.log('completed');
+				});
 			});
 		}
 	};
@@ -73,14 +74,17 @@ const ProfileCard = props => {
 						</div>
 					</div>
 				</div>
-				<hr/>
-				<button className="btn btn-primary btn-lg btn-block" onClick={tagOut}>Tag out</button>
-				<hr/>
+				<hr />
+				{!profile.tagged
+					? <button className="btn btn-primary btn-lg btn-block" onClick={tagOut}>Tag out</button>
+					: <div>If you ain't first, you're last. You're out.</div>
+				}
+				<hr />
 				<div className="row">
 					<div className="col">
 						<div className="card">
 							<ul className="list-group list-group-flush">
-								<li className="list-group-item"><strong>Target:</strong> {target}</li>
+								<li className="list-group-item"><strong>Target:</strong> {!profile.tagged ? target : 'N/A'}</li>
 								<li className="list-group-item"><strong>Tags:</strong> {numTags}</li>
 								<li className="list-group-item"><strong>Rank:</strong> {rank}</li>
 							</ul>
