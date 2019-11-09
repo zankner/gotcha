@@ -18,25 +18,42 @@ const ProfileCard = props => {
 			userRef.get().then(userDoc => {
 				setProfile(userDoc.data());
 				setNumTags(userDoc.data().numTags);
-				const statsRef = props.firebase.firestore().collection('stats').doc('uniqueTags');
-				statsRef.get().then(statsDoc => {
-					const stats = statsDoc.data();
-					const validKeys = [];
-					Object.keys(stats).forEach(uniqueTag => {
-						if (stats[uniqueTag] !== 0) {
-							validKeys.push(parseInt(uniqueTag, 10));
-						}
+				const userCollection = props.firebase.firestore().collection('users');
+				userCollection.get().then(querySnapshot => {
+					const dupArray = querySnapshot.docs.map(doc => {
+						return doc.data().numTags;
 					});
-					validKeys.sort((a, b) => b - a);
-					setRank(validKeys.indexOf(userDoc.data().numTags) + 1);
+					const distinctTags = [...new Set(dupArray)];
+					distinctTags.sort((a, b) => b - a);
+					console.log()
+					setRank(distinctTags.indexOf(userDoc.data().numTags)+1);
 				});
-				const userOnlyRef = userRef.collection('private').doc('userOnly');
-				userOnlyRef.get().then(userOnlyDoc => {
-					setTarget(userOnlyDoc.data().target);
-				});
+			});
+			const userOnlyRef = userRef.collection('private').doc('userOnly');
+			userOnlyRef.get().then(userOnlyDoc => {
+				setTarget(userOnlyDoc.data().target);
 			});
 		}
 	}, [props.auth]);
+
+
+	const tagOut = () => {
+		if(props.auth.isLoaded){
+			props.firebase.auth().currentUser.getIdToken().then(token => {
+				const request = $.ajax({
+					method: 'POST',
+					url: '/tag',
+					contentType: 'application/json',
+					data: JSON.stringify({
+						token: token,
+						lastWords: 'test final words'
+					})
+				});
+
+				request.done(() => {console.log('completed')});
+			});
+		}
+	};
 
 	if (!profile) {
 		return '';
