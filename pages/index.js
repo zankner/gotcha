@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import Layout from './Layout';
+import Layout from '../components/Layout';
 import { withRouter } from 'react-router-dom';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
@@ -11,6 +11,7 @@ import RecentTagsCard from '../components/RecentTagsCard';
 const Home = props => {
 	useEffect(() => {
 		if (props.auth.isLoaded && props.auth.isEmpty) {
+			console.log('Redirecting to login...');
 			props.history.replace('/login')
 		}
 	}, [props.auth]);
