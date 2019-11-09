@@ -12,7 +12,6 @@ import DevelopersCard from '../components/DevelopersCard';
 const Home = props => {
 	useEffect(() => {
 		if (props.auth.isLoaded && props.auth.isEmpty) {
-			console.log('Redirecting to login...');
 			props.history.replace('/login')
 		}
 	}, [props.auth]);

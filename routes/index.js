@@ -68,16 +68,38 @@ router.post('/tag', (req, res) => {
 												}).then(() => {
 													res.sendStatus(status.OK);
 												});
+											}).catch(() => {
+												return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 											});
+										}).catch(() => {
+											return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 										});
+									}).catch(() => {
+										return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 									});
+								}).catch(() => {
+									return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 								});
+							}).catch(() => {
+								return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 							});
+						}).catch(() => {
+							return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 						});
+					}).catch(() => {
+						return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 					});
+				}).catch(() => {
+					return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 				});
+			}).catch(() => {
+				return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 			});
+		}).catch(() => {
+			return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 		});
+	}).catch(() => {
+		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
 	});
 });
 

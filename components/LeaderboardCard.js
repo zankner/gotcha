@@ -12,7 +12,6 @@ const LeaderboardCard = (props) => {
 	useEffect(() => {
 		const userCollection = props.firebase.firestore().collection('users');
 			userCollection.where('tagged', '==', false).get().then(querySnapshot => {
-			console.log(querySnapshot.size);
 			const dupArray = querySnapshot.docs.map(doc => {
 				return doc.data().numTags;
 			});

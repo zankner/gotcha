@@ -36,23 +36,7 @@ const ProfileCard = props => {
 	}, [props.auth]);
 
 	const tagOut = () => {
-		if (props.auth.isLoaded) {
-			props.firebase.auth().currentUser.getIdToken().then(token => {
-				const request = $.ajax({
-					method: 'POST',
-					url: '/tag',
-					contentType: 'application/json',
-					data: JSON.stringify({
-						token: token,
-						lastWords: 'test final words'
-					})
-				});
-
-				request.done(() => {
-					console.log('completed');
-				});
-			});
-		}
+		props.history.push('/?modal=lastWordsModal')
 	};
 
 	if (!profile) {
