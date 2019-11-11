@@ -17,7 +17,7 @@ const LastWordsForm = props => {
 					method: 'POST',
 					url: '/tag',
 					contentType: 'application/json',
-					data: JSON.stringify({ token, lastWords })
+					data: JSON.stringify({ token, lastWords: lastWords.trim() })
 				}).done(() => {
 					actions.setSubmitting(false);
 					props.history.replace('/');

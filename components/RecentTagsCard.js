@@ -33,7 +33,7 @@ const RecentTagsCard = props => {
 									<h5 className="mb-1 font-weight-bold">{tag.name}</h5>
 									<small className="text-muted">{moment(tag.timestamp).fromNow()}</small>
 								</div>
-								<p className="text-muted mb-0 mt-1">{tag.lastWords}</p>
+								<p className="text-muted mb-0 mt-1">{tag.lastWords.length ? tag.lastWords : <i>No last words</i>}</p>
 							</li>
 						))}
 					</ul>
