@@ -24,7 +24,7 @@ const ProfileCard = props => {
 				setProfile(userDoc.data());
 				setNumTags(userDoc.data().numTags);
 				const userCollection = props.firebase.firestore().collection('users');
-				userCollection.get().then(querySnapshot => {
+				userCollection.where('tagged', '==', false).orderBy('numTags', 'desc').get().then(querySnapshot => {
 					const dupArray = querySnapshot.docs.map(doc => {
 						return doc.data().numTags;
 					});
