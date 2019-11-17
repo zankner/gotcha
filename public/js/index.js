@@ -13,7 +13,6 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
 import { createFirestoreInstance } from 'redux-firestore';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Home from '../../pages';
-import Profile from '../../pages/profile';
 import Login from '../../pages/login';
 
 // Initialize Firebase
@@ -53,7 +52,6 @@ render(
 			<BrowserRouter>
 				<Switch>
 					<Route exact path='/' component={Home} />
-					<Route exact path='/profile' component={Profile} />
 					<Route exact path='/login' component={Login} />
 				</Switch>
 			</BrowserRouter>

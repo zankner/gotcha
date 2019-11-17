@@ -51,8 +51,7 @@ const LoginForm = props => {
 							setAlert('Something went wrong. Please try again.');
 					}
 				});
-			}}>Sign in
-			</button>
+			}}>Get started</button>
 			<div role="alert" className="alert alert-danger mt-3 mb-0 animate bounceIn" hidden={!alert}>{alert}</div>
 		</React.Fragment>
 	);

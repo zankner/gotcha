@@ -1,27 +1,90 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import 'firebase/firestore';
 import 'firebase/auth';
 import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
+import { Bar } from 'react-chartjs-2';
 
-const StatsCard = () => {
+const StatsCard = props => {
+	const [sumTags, setSumTags] = useState(null);
+
+	useEffect(() => {
+		const sumTagsRef = props.firebase.firestore().collection('stats').doc('sumTags');
+		sumTagsRef.get().then(sumTagsDoc => {
+			setSumTags(sumTagsDoc.data());
+		});
+	}, []);
+
+	if (!sumTags) {
+		return '';
+	}
+
 	return (
 		<div className="card">
 			<div className="card-header header text-uppercase">Statistics</div>
-			<ul className="list-group list-group-flush">
-				<li className="list-group-item">1. Zack Ankner</li>
-				<li className="list-group-item">2. Ben Botvinick</li>
-				<li className="list-group-item">3. Max Litvak</li>
-				<li className="list-group-item">4. Runpeng Liu</li>
-				<li className="list-group-item">5. Ned Sahin</li>
-				<li className="list-group-item">6. Mr. Pratt</li>
-				<li className="list-group-item">7. Mr. Ball</li>
-				<li className="list-group-item">8. Zaney Bookbinder</li>
-				<li className="list-group-item">9. Technical Tom</li>
-				<li className="list-group-item">10. Mr. Hales</li>
-			</ul>
+			<div className="card-body p-4">
+				<div className="card">
+					<div className="card-header header text-uppercase">Tags by class</div>
+					<div className="p-3 card-body">
+					<Bar data={{
+						labels: [
+							'Freshman',
+							'Sophomores',
+							'Juniors',
+							'Seniors'
+						],
+						datasets: [{
+							label: '# of Tags',
+							data: [sumTags['2023'], sumTags['2022'], sumTags['2021'], sumTags['2020']],
+							backgroundColor: [
+								'#ad4c43',
+								'#d1a49d',
+								'#bad2e3',
+								'#628bb9'
+							],
+							hoverBackgroundColor: [
+								'#ad4c43',
+								'#d1a49d',
+								'#bad2e3',
+								'#628bb9'
+							]
+						}]
+					}} options={{
+						responsive: true,
+						legend: {
+							display: false
+						},
+						scales: {
+							yAxes: [{
+								ticks: {
+									beginAtZero: true,
+									stepSize: 1
+								},
+								scaleLabel: {
+									display: true,
+									labelString: 'Tags',
+									fontSize: 17,
+									padding: 10
+								}
+							}],
+							xAxes: [{
+								gridLines: {
+									display: false
+								}
+							}]
+						}
+					}} />
+				</div>
+					<ul className="list-group list-group-flush">
+						<li className="list-group-item"><strong>Freshmen:</strong> {sumTags['2023']}</li>
+						<li className="list-group-item"><strong>Sophomores:</strong> {sumTags['2022']}</li>
+						<li className="list-group-item"><strong>Juniors:</strong> {sumTags['2021']}</li>
+						<li className="list-group-item"><strong>Class I:</strong> {sumTags['2020']}</li>
+					</ul>
+				</div>
+			</div>
 		</div>
 	);
 };

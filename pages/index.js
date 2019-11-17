@@ -8,6 +8,7 @@ import ProfileCard from '../components/ProfileCard';
 import LeaderboardCard from '../components/LeaderboardCard';
 import RecentTagsCard from '../components/RecentTagsCard';
 import DevelopersCard from '../components/DevelopersCard';
+import StatsCard from '../components/StatsCard';
 
 const Home = props => {
 	useEffect(() => {
@@ -30,7 +31,8 @@ const Home = props => {
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
 						<LeaderboardCard className="mb-3 mb-sm-4" />
-						<DevelopersCard />
+						<DevelopersCard className="mb-3 mb-sm-4" />
+						<StatsCard />
 					</div>
 				</div>
 			</div>
