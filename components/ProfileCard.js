@@ -129,7 +129,7 @@ const ProfileCard = props => {
 													break;
 											}
 
-											return <img src={img} alt="" className="mr-2 d-inline-block rounded-circle img-thumbnail" data-toggle="tooltip"
+											return <img src={img} alt="" className="mr-2 d-inline-block rounded-circle img-thumbnail mb-2 mb-sm-0" data-toggle="tooltip"
 													 data-placement="top" title={title} width={50} height={50} key={index} />
 										})}
 									</div>
