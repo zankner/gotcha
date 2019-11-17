@@ -67,8 +67,9 @@ router.post('/tag', (req, res) => {
 												admin.firestore().collection('users').doc(userOnly.target).collection('private').doc('adminOnly').update({
 													hunter: hunterUid
 												}).then(() => {
+													console.log(typeof badgeCheck.firstTag);
 													badgeCheck.firstTag(user);
-													badgeCheck.tagStreak(user);
+													badgeCheck.tagStreak(hunterDoc.data());
 													res.sendStatus(status.OK);
 												});
 											}).catch(() => {
