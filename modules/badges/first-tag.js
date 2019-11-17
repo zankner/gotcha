@@ -6,12 +6,20 @@ const firstTag = (user) => {
     const data = doc.data();
     if (data.firstTag === true){
       const userRef = admin.firestore().collection('users').doc(user.email);
-      userRef.update({
-        'badges.firstTag': true
+      userRef.collection('private').doc('userOnly').update({
+        badges: admin.firestore.FieldValue.arrayUnion('firstOut');
       }).then(() => {
-        statsRef.update({
-          'firstTag': false
-        }) 
+     	userRef.collection('private').doc('adminOnly').get().then( adminDoc => {
+		adminData = adminDoc.data();
+		const taggerRef = admin.firestore().collection('users').doc(adminData.hunter);
+		taggerRef.collection('private').doc('userOnly').update({
+			badges: 'firstTag'
+		}).then(() => {
+        		statsRef.update({
+          			'firstTag': false
+        		}) 
+		})
+	}) 
       })
     }
   })
