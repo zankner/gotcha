@@ -34,6 +34,7 @@ module.exports = {
 	plugins: [
 		new CopyWebpackPlugin([
 			{from: 'public/img/', to: 'img/'},
+			{from: 'public/audio/', to: 'audio/'},
 			{from: 'public/favicon/', to: 'favicon/'},
 			{from: 'public/index.html', to: 'index.html'}
 		])

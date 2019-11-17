@@ -1,5 +1,5 @@
 import React from 'react';
-import LastWordsForm from './LastWordsForm'
+import LastWordsForm from './LastWordsForm';
 import { compose } from 'redux';
 import { withRouter } from 'react-router-dom';
 
@@ -10,14 +10,13 @@ const LastWordsModal = props => (
 				<div className="modal-header">
 					<h2 className="modal-title header text-uppercase">Last Words</h2>
 					<button type="button" className="close" data-dismiss="modal" aria-label="Close" onClick={() => {
-						props.history.replace('/')
-					}}>
-						<span aria-hidden="true">&times;</span>
-					</button>
+						props.history.replace('/');
+						window.location.reload();
+					}}><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div className="modal-body">
 					<p className="text-muted">Enter some last words before tagging yourself out. Be careful; everyone can see these.</p>
-					<LastWordsForm/>
+					<LastWordsForm />
 				</div>
 			</div>
 		</div>

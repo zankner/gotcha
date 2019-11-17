@@ -49,6 +49,7 @@ const ProfileCard = props => {
 
 	const tagOut = () => {
 		props.history.push('/?modal=lastWordsModal');
+		new Audio('/audio/recorder.mp3').play()
 	};
 
 	if (!profile) {
