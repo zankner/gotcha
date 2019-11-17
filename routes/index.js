@@ -70,6 +70,7 @@ router.post('/tag', (req, res) => {
 													console.log(typeof badgeCheck.firstTag);
 													badgeCheck.firstTag(user);
 													badgeCheck.tagStreak(hunterDoc.data());
+													badgeCheck.kingslayer(user);
 													res.sendStatus(status.OK);
 												});
 											}).catch(() => {

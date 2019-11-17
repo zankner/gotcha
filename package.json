@@ -6,6 +6,7 @@
     "start": "node ./bin/start",
     "dev": "nodemon ./bin/start",
     "test": "node ./bin/test",
+    "kingslayer": "node ./bin/kingslayer",
     "build": "webpack"
   },
   "dependencies": {
