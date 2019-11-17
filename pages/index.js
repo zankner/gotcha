@@ -31,8 +31,8 @@ const Home = props => {
 					</div>
 					<div className="col-12 col-lg-6 pb-3 pb-sm-5 pt-lg-5">
 						<LeaderboardCard className="mb-3 mb-sm-4" />
-						<DevelopersCard className="mb-3 mb-sm-4" />
-						<StatsCard />
+						<StatsCard className="mb-3 mb-sm-4" />
+						<DevelopersCard />
 					</div>
 				</div>
 			</div>
