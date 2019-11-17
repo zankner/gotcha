@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-const tagStreak = (user, data) => {
+const tagStreak = (user) => {
   const tags = user.tags;
   if(tags.length == 5){
     const userRef = admin.firestore().collection('users').doc(user.email);

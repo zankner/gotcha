@@ -1,2 +1,2 @@
-module.exports = require('./tag-streak');
+module.exports = require('./tag-streaks');
 module.exports = require('./first-tag');

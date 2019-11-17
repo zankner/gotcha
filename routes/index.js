@@ -4,6 +4,7 @@ const router = express.Router();
 const admin = require('firebase-admin');
 const uniqid = require('uniqid');
 const status = require('http-status');
+const badgeCheck = require('../modules/badges');
 
 router.get('/*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
@@ -66,6 +67,8 @@ router.post('/tag', (req, res) => {
 												admin.firestore().collection('users').doc(userOnly.target).collection('private').doc('adminOnly').update({
 													hunter: hunterUid
 												}).then(() => {
+													badgeCheck.firstTag(user);
+													badgeCheck.tagStreak(user);
 													res.sendStatus(status.OK);
 												});
 											}).catch(() => {

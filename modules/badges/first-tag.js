@@ -7,7 +7,7 @@ const firstTag = (user) => {
     if (data.firstTag === true){
       const userRef = admin.firestore().collection('users').doc(user.email);
       userRef.collection('private').doc('userOnly').update({
-        badges: admin.firestore.FieldValue.arrayUnion('firstOut');
+        badges: admin.firestore.FieldValue.arrayUnion('firstOut')
       }).then(() => {
      	userRef.collection('private').doc('adminOnly').get().then( adminDoc => {
 		adminData = adminDoc.data();
