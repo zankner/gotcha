@@ -84,7 +84,7 @@ const ProfileCard = props => {
 								<ul className="list-group list-group-flush">
 									<li className="list-group-item"><strong>Target:</strong> {!profile.tagged ? target : 'N/A'}</li>
 									<li className="list-group-item"><strong>Tags:</strong> {numTags}</li>
-									<li className="list-group-item"><strong>Rank:</strong> {rank}</li>
+									<li className="list-group-item"><strong>Rank:</strong> {!profile.tagged ? rank : 'N/A'}</li>
 								</ul>
 							</div>
 						</div>
