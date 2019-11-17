@@ -36,7 +36,7 @@ const StatsCard = props => {
 							'Seniors'
 						],
 						datasets: [{
-							label: '# of Tags',
+							label: 'Tags',
 							data: [sumTags['2023'], sumTags['2022'], sumTags['2021'], sumTags['2020']],
 							backgroundColor: [
 								'#ad4c43',

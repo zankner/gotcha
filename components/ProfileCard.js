@@ -11,6 +11,11 @@ const ProfileCard = props => {
 	const [target, setTarget] = useState('Loading...');
 	const [numTags, setNumTags] = useState('Loading...');
 	const [rank, setRank] = useState('Loading...');
+	const [badges, setBadges] = useState([]);
+
+	useEffect(() => {
+		$('[data-toggle="tooltip"]').tooltip();
+	});
 
 	useEffect(() => {
 		if (props.auth.isLoaded) {
@@ -28,9 +33,13 @@ const ProfileCard = props => {
 					setRank(distinctTags.indexOf(userDoc.data().numTags) + 1);
 				});
 			});
+
 			const userOnlyRef = userRef.collection('private').doc('userOnly');
 			userOnlyRef.get().then(userOnlyDoc => {
-				const targetRef = props.firebase.firestore().collection('users').doc(userOnlyDoc.data().target);
+				const userOnly = userOnlyDoc.data();
+				setBadges(userOnly.badges);
+
+				const targetRef = props.firebase.firestore().collection('users').doc(userOnly.target);
 				targetRef.get().then(targetDoc => {
 					setTarget(targetDoc.data().name);
 				});
@@ -68,7 +77,7 @@ const ProfileCard = props => {
 						: <div className="text-center text-sm-left">If you ain't first, you're last. You're out.</div>
 					}
 					<hr />
-					<div className="row">
+					<div className="row mb-3">
 						<div className="col">
 							<div className="card">
 								<ul className="list-group list-group-flush">
@@ -76,6 +85,57 @@ const ProfileCard = props => {
 									<li className="list-group-item"><strong>Tags:</strong> {numTags}</li>
 									<li className="list-group-item"><strong>Rank:</strong> {rank}</li>
 								</ul>
+							</div>
+						</div>
+					</div>
+					<div className="row">
+						<div className="col">
+							<div className="card">
+								<div className="card-header header text-uppercase">Badges</div>
+								{badges.length > 0 ? (
+									<div className="card-body p-2">
+										{badges.map((badge, index) => {
+											let title, img;
+
+											switch (badge) {
+												case 'firstOut':
+													title = 'First Out';
+													img = '/img/ghost.svg';
+													break;
+
+												case 'firstTag':
+													title = 'First Tag';
+													img = '/img/hermes.svg';
+													break;
+
+												case '5':
+													title = 'Bloodthirsty';
+													img = '/img/helmet.svg';
+													break;
+
+												case '10':
+													title = 'Merciless';
+													img = '/img/axe.svg';
+													break;
+
+												case '20':
+													title = 'Absolute Unit';
+													img = '/img/sword.svg';
+													break;
+
+												case 'kingslayer':
+													title = 'Kingslayer';
+													img = '/img/crown.svg';
+													break;
+											}
+
+											return <img src={img} alt="" className="mr-2 d-inline-block rounded-circle img-thumbnail" data-toggle="tooltip"
+													 data-placement="top" title={title} width={50} height={50} key={index} />
+										})}
+									</div>
+								) : (
+									<div className="card-body">You don't have any badges.</div>
+								)}
 							</div>
 						</div>
 					</div>
