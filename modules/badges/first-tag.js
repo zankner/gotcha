@@ -5,7 +5,6 @@ const firstTag = (user) => {
   statsRef.get().then(doc => {
     const data = doc.data();
     if (data.firstTag === true){
-      console.log('made it');
       const userRef = admin.firestore().collection('users').doc(user.email);
       userRef.collection('private').doc('userOnly').update({
         badges: admin.firestore.FieldValue.arrayUnion('firstOut')
