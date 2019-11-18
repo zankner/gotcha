@@ -17,8 +17,13 @@ students = loadJsonFile.sync('lib/gotcha-data.json');
 let studentIds = [];
 let rowCounter = 0;
 let toAdd = [];
+const notAllowed = ['benjamin_botvinick21@milton.edu', 'zachary_ankner20@milton.edu',
+'max_litvak20@milton.edu', 'beck_kendig20@milton.edu', 'olivia_wang20@milton.edu'];
 for(let row in students){
-	if (students.hasOwnProperty(row) && rowCounter > 1 && (students[row]['Unnamed: 2'] === 'Class I' || students[row]['Unnamed: 2'] === 'Class II' || students[row]['Unnamed: 2'] === 'Class III' || students[row]['Unnamed: 2'] === 'Class IV')) {
+	if (students.hasOwnProperty(row) && rowCounter > 1 && (students[row]['Unnamed: 2'] === 'Class I'
+	|| students[row]['Unnamed: 2'] === 'Class II' || students[row]['Unnamed: 2'] === 'Class III'
+	|| students[row]['Unnamed: 2'] === 'Class IV')
+	&& !notAllowed.includes(students[row]['Unnamed: 6'].toLowerCase())) {
 		const uid = students[row]['Unnamed: 6'].toLowerCase();
 		const name = `${students[row]['Unnamed: 5'] || students[row]['Unnamed: 4']} ${students[row]['Unnamed: 3']}`;
 		const temp = {
@@ -72,4 +77,3 @@ for(let i=0; i<adminIds.length; i+=1){
 		})
 	}
 }
-
