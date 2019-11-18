@@ -13,7 +13,7 @@ const firstTag = (user) => {
 		adminData = adminDoc.data();
 		const taggerRef = admin.firestore().collection('users').doc(adminData.hunter);
 		taggerRef.collection('private').doc('userOnly').update({
-			badges: 'firstTag'
+			badges: admin.firestore.FieldValue.arrayUnion('firstTag')
 		}).then(() => {
         		statsRef.update({
           			'firstTag': false
