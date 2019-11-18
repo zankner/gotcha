@@ -6,6 +6,19 @@ const uniqid = require('uniqid');
 const status = require('http-status');
 const badgeCheck = require('../modules/badges');
 
+router.get('/hoose', (req, res) => {
+	const userCollection = admin.firestore().collection('users');
+	userCollection.where('tagged', '==', false).get().then(querySnapshot => {
+		const players = querySnapshot.docs.map(doc => {
+			return doc.data().name;
+		});
+
+		res.send(players);
+	}).catch(() => {
+		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+	});
+});
+
 router.get('/*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
