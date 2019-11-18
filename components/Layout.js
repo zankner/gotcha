@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -7,6 +7,8 @@ import LastWordsModal from './LastWordsModal';
 import { parse } from 'query-string';
 
 const Layout = props => {
+	const audio = useMemo(() => new Audio('/audio/hype.mp3'), []);
+
 	useEffect(() => {
 		const query = parse(props.location.search);
 		if (query.modal) {
@@ -17,7 +19,13 @@ const Layout = props => {
 	return (
 		<React.Fragment>
 			<nav className="navbar navbar-light bg-light fixed-top shadow">
-				<Link to="/" className="navbar-brand py-0"><h3 className="header my-0 text-uppercase">Gotcha 2019</h3></Link>
+				<Link to="#" className="navbar-brand py-0" onClick={() => {
+					if (audio.paused) {
+						audio.play();
+					} else {
+						audio.pause();
+					}
+				}}><h3 className="header my-0 text-uppercase">Gotcha 2019</h3></Link>
 			</nav>
 			{props.children}
 
