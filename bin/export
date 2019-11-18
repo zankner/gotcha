@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const firestoreService = require('firestore-export-import');
+const serviceAccount = require('../service-account-key.json');
+const fs = require('fs');
+
+// Initiate Firebase App
+firestoreService.initializeApp(serviceAccount, 'https://gotcha-67060.firebaseio.com');
+
+// Start exporting your data
+firestoreService
+	.backup('tags')
+	.then(data => fs.writeFileSync('./lib/tags.json', JSON.stringify(data)));
