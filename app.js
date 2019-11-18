@@ -4,7 +4,6 @@ const cookieParser = require('cookie-parser');
 const enforce = require('express-sslify');
 const admin = require('firebase-admin');
 
-
 // Create express app
 const app = express();
 
