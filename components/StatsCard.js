@@ -81,7 +81,7 @@ const StatsCard = props => {
 						<li className="list-group-item"><strong>Freshmen:</strong> {sumTags['2023']}</li>
 						<li className="list-group-item"><strong>Sophomores:</strong> {sumTags['2022']}</li>
 						<li className="list-group-item"><strong>Juniors:</strong> {sumTags['2021']}</li>
-						<li className="list-group-item"><strong>Class I:</strong> {sumTags['2020']}</li>
+						<li className="list-group-item"><strong>Seniors:</strong> {sumTags['2020']}</li>
 					</ul>
 				</div>
 			</div>

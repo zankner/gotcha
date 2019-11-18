@@ -15,7 +15,10 @@ const LastWordsModal = props => (
 					}}><span aria-hidden="true">&times;</span></button>
 				</div>
 				<div className="modal-body">
-					<p className="text-muted">Enter some last words before tagging yourself out. Be careful; everyone can see these.</p>
+					<p className="text-muted">
+						Enter some last words before tagging yourself out.
+						Keep it PG and <strong>do not expose your tagger or target</strong> or there will be consequences.
+					</p>
 					<LastWordsForm />
 				</div>
 			</div>
