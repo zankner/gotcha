@@ -19,6 +19,19 @@ router.get('/hoose', (req, res) => {
 	});
 });
 
+router.get('/tags', (req, res) => {
+	const userCollection = admin.firestore().collection('tags');
+	userCollection.get().then(querySnapshot => {
+		const tags = querySnapshot.docs.map(doc => {
+			return doc.data();
+		});
+
+		res.send(tags);
+	}).catch(() => {
+		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+	});
+});
+
 router.get('/*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, '../public/index.html'));
 });
