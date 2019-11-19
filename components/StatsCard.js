@@ -6,6 +6,7 @@ import { withFirebase } from 'react-redux-firebase';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
+import * as _ from 'lodash';
 
 const StatsCard = props => {
 	const [sumTags, setSumTags] = useState(null);
@@ -26,6 +27,13 @@ const StatsCard = props => {
 			<div className="card">
 				<div className="card-header header text-uppercase">Statistics</div>
 				<div className="card-body p-4">
+					<div className="card mb-3">
+						<div className="card-header header text-uppercase">Totals</div>
+						<ul className="list-group list-group-flush">
+							<li className="list-group-item"><strong>Tagged:</strong> {_.sum(_.values(sumTags))}</li>
+							<li className="list-group-item"><strong>Remaining:</strong> {707 - _.sum(_.values(sumTags))}</li>
+						</ul>
+					</div>
 					<div className="card">
 						<div className="card-header header text-uppercase">Tags by class</div>
 						<div className="p-3 card-body">

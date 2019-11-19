@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 const admin = require('firebase-admin');
+const uniqid = require('uniqid');
+const badgeCheck = require('../modules/badges');
 
 // Set up Firebase
 const serviceAccount = require('../service-account-key.json');
-const uniqid = require('uniqid');
-const badgeCheck = require('../modules/badges');
 
 admin.initializeApp({
 	credential: admin.credential.cert(serviceAccount),
