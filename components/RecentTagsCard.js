@@ -12,7 +12,7 @@ const RecentTagsCard = props => {
 
 	useEffect(() => {
 		const tagRef = props.firebase.firestore().collection('tags');
-		tagRef.orderBy('timestamp', 'desc').limit(5).get().then(querySnapshot => {
+		tagRef.orderBy('timestamp', 'desc').limit(10).get().then(querySnapshot => {
 			setRecentTags(querySnapshot.docs.map(doc => {
 				const { name, timestamp, lastWords } = doc.data();
 				return { name, timestamp, lastWords };
