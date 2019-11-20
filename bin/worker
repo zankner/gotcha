@@ -1,0 +1,104 @@
+const throng = require('throng');
+const Queue = require('bull');
+const admin = require('firebase-admin');
+const badgeCheck = require('../modules/badges');
+const uniqid = require('uniqid');
+
+// Set up Firebase
+const serviceAccount = require('../service-account-key.json');
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: 'https://gotcha-67060.firebaseio.com'
+});
+
+const REDIS_URL = process.env.REDIS_URL || 'redis://127.0.0.1:6379';
+const workers = process.env.WEB_CONCURRENCY || 2;
+const maxJobsPerWorker = 50;
+
+const start = () => {
+	const tagQueue = new Queue('tag', REDIS_URL);
+
+	tagQueue.process(maxJobsPerWorker, async job => {
+		const { uid, lastWords } = job.data;
+		const userRef = admin.firestore().collection('users').doc(uid);
+
+		console.log('Verified token');
+
+		const userDoc = await userRef.get();
+		const user = userDoc.data();
+
+		if (user.tagged) {
+			throw new Error();
+		}
+
+		const userOnlyDoc = await userRef.collection('private').doc('userOnly').get();
+		const userOnly = userOnlyDoc.data();
+
+		const adminOnlyDoc = await userRef.collection('private').doc('adminOnly').get();
+		const adminOnly = adminOnlyDoc.data();
+
+		const hunterId = adminOnly.hunter;
+		const hunterRef = admin.firestore().collection('users').doc(hunterId);
+
+		await hunterRef.update({
+			'numTags': admin.firestore.FieldValue.increment(1)
+		});
+
+		console.log('Updated hunter\'s tag count');
+
+		await hunterRef.collection('private').doc('userOnly').update({
+			'target': userOnly.target
+		});
+
+		console.log('Updated hunter\'s target');
+
+		await userRef.update({
+			'tagged': true
+		});
+
+		console.log('Updated player\'s tag status');
+
+		const tagId = uniqid();
+		const tagRef = admin.firestore().collection('tags').doc(tagId);
+		const timestamp = Date.now();
+
+		await tagRef.set({
+			timestamp: timestamp,
+			lastWords: lastWords,
+			name: user.name,
+			tagged: uid
+		});
+
+		console.log('Created tag document');
+
+		await hunterRef.collection('private').doc('userOnly').update({
+			tags: admin.firestore.FieldValue.arrayUnion({ [timestamp]: tagRef })
+		});
+
+		console.log('Assigned tag to hunter');
+
+		const statsRef = admin.firestore().collection('stats').doc('sumTags');
+		const hunterDoc = await hunterRef.get();
+
+		await statsRef.update({
+			[hunterDoc.data().class]: admin.firestore.FieldValue.increment(1)
+		});
+
+		console.log('Updated statistics');
+
+		await admin.firestore().collection('users').doc(userOnly.target).collection('private').doc('adminOnly').update({
+			hunter: hunterId
+		});
+
+		console.log('Updated hunter\'s target');
+
+		badgeCheck.firstTag(user);
+		badgeCheck.tagStreak(hunterDoc.data());
+		badgeCheck.kingslayer(user);
+
+		return {};
+	});
+};
+
+throng({ workers, start });

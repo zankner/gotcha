@@ -18,10 +18,25 @@ const LastWordsForm = props => {
 					url: '/tag',
 					contentType: 'application/json',
 					data: JSON.stringify({ token, lastWords: lastWords.trim() })
-				}).done(() => {
-					actions.setSubmitting(false);
-					props.history.replace('/');
-					window.location.reload();
+				}).done(data => {
+					const interval = setInterval(() => {
+						$.ajax({
+							method: 'GET',
+							url: `/job/${data.id}`,
+							contentType: 'application/json'
+						}).done(data => {
+							if (data.state === 'completed') {
+								clearInterval(interval);
+								actions.setSubmitting(false);
+								props.history.replace('/');
+								window.location.reload();
+							}
+						}).fail(() => {
+							clearInterval(interval);
+							actions.setSubmitting(false);
+							setAlert('Whoops! Something went wrong.');
+						});
+					}, 200);
 				}).fail(() => {
 					actions.setSubmitting(false);
 					setAlert('Whoops! Something went wrong.');
