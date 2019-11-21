@@ -8,31 +8,31 @@ const Queue = require('bull');
 // Create work queue
 const tagQueue = new Queue('tag', process.env.REDIS_URL || 'redis://127.0.0.1:6379');
 
-router.get('/hoose', (req, res) => {
-	const userCollection = admin.firestore().collection('users');
-	userCollection.where('tagged', '==', false).get().then(querySnapshot => {
-		const players = querySnapshot.docs.map(doc => {
-			return doc.data().name;
-		});
-
-		res.send(players);
-	}).catch(() => {
-		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
-	});
-});
-
-router.get('/tags', (req, res) => {
-	const userCollection = admin.firestore().collection('tags');
-	userCollection.get().then(querySnapshot => {
-		const tags = querySnapshot.docs.map(doc => {
-			return doc.data();
-		});
-
-		res.send(tags);
-	}).catch(() => {
-		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
-	});
-});
+// router.get('/hoose', (req, res) => {
+// 	const userCollection = admin.firestore().collection('users');
+// 	userCollection.where('tagged', '==', false).get().then(querySnapshot => {
+// 		const players = querySnapshot.docs.map(doc => {
+// 			return doc.data().name;
+// 		});
+//
+// 		res.send(players);
+// 	}).catch(() => {
+// 		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+// 	});
+// });
+//
+// router.get('/tags', (req, res) => {
+// 	const userCollection = admin.firestore().collection('tags');
+// 	userCollection.get().then(querySnapshot => {
+// 		const tags = querySnapshot.docs.map(doc => {
+// 			return doc.data();
+// 		});
+//
+// 		res.send(tags);
+// 	}).catch(() => {
+// 		return res.sendStatus(status.INTERNAL_SERVER_ERROR);
+// 	});
+// });
 
 router.get('/job/:id', async (req, res) => {
 	const id = req.params.id;
