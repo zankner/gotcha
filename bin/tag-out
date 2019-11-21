@@ -12,8 +12,7 @@ admin.initializeApp({
 	databaseURL: 'https://gotcha-67060.firebaseio.com'
 });
 
-const tagOut = uid => {
-	const lastWords = '';
+const tagOut = (uid, lastWords) => {
 	const userRef = admin.firestore().collection('users').doc(uid);
 
 	userRef.get().then(userDoc => {
@@ -80,4 +79,5 @@ const tagOut = uid => {
 };
 
 const uid = process.argv[2];
-tagOut(uid);
+const lastWords = process.argv[3] || '';
+tagOut(uid, lastWords);
