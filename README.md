@@ -1,2 +1,2 @@
 # Gotcha
-Platform for Gotcha 2019
+Platform for Milton Academy Gotcha 2019
