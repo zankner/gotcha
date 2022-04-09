@@ -44,7 +44,7 @@
     "json2csv": "^4.5.2",
     "libphonenumber-js": "^1.7.22",
     "lodash": "latest",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "nodemailer": "^6.3.0",
     "query-string": "^6.8.1",
     "react": "^16.8.6",
