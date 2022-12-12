@@ -31,7 +31,7 @@
     "check-types": "^10.0.0",
     "cookie-parser": "^1.4.4",
     "cryptr": "^4.0.2",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-sslify": "^1.2.0",
     "express-useragent": "^1.0.13",
     "file-saver": "^2.0.2",
